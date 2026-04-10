@@ -1,0 +1,24 @@
+.container{
+  display: flex;
+  background: #eee;
+  justify-content: center;
+  gap: 20px;
+  height: 200px;
+}
+.box{
+  color: pink;
+  margin-top: 20px;
+  padding: 20px;
+}
+.grid-container {
+  display: grid;                         /* grid layout */
+  grid-template-columns: 1fr 1fr 1fr;        /* 2 columns */
+  gap: 20px;                             /* space between items */
+  padding: 20px;                         /* inside container */
+  background: #ddd;
+}
+
+.item {
+  background: tomato;
+  padding: 20px;                         /* inside item */
+}
