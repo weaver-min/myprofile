@@ -35,7 +35,8 @@ function validateCustomerInput(array $data): array
 
     if ($data['kana'] === '') {
         $errors[] = 'フリガナは必須項目です。';
-    } elseif (!preg_match('/\A[\p{Hiragana}\p{Katakana}\x{30FC}\x{3000}\s]+\z/u', $data['kana'])) {
+    } 
+    elseif (!preg_match('/\A[\p{Hiragana}\p{Katakana}\x{30FC}\x{3000}\s]+\z/u', $data['kana'])) {
         $errors[] = 'フリガナは日本語のひらがな・カタカナで入力してください。';
     }
 
