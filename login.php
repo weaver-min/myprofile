@@ -11,17 +11,17 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require 'db.php';
 
-    $login_id  = $_POST['login_id'] ?? '';
-    $login_pass = $_POST['login_pass'] ?? '';
+    $loginId  = $_POST['login_id'] ?? '';
+    $loginPass = $_POST['login_pass'] ?? '';
 
-    if ($login_id === '' || $login_pass === '') {
+    if ($loginId === '' || $loginPass === '') {
         $error = 'ユーザーIDとパスワードを入力してください。';
     } else {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-        $stmt->execute([$login_id]);
+        $stmt->execute([$loginId]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($login_pass, $user['password'])) {
+        if ($user && password_verify($loginPass, $user['password'])) {
             $_SESSION['user_id']  = $user['id'];
             $_SESSION['login_id'] = $user['username'];
             header("Location: top.php");

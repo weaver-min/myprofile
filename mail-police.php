@@ -8,17 +8,17 @@ $success = '';
 $settings = $pdo->query("SELECT * FROM mail_sender LIMIT 1")->fetch();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $sender_name = $_POST['sender_name'] ?? '';
-  $sender_email = $_POST['sender_email'] ?? '';
+  $senderName = $_POST['sender_name'] ?? '';
+  $senderEmail = $_POST['sender_email'] ?? '';
 
-  if ($sender_name === '' || $sender_email === '') {
+  if ($senderName === '' || $senderEmail === '') {
     $error = '送信者名と送信アドレスを入力してください。';
   }
-  elseif (!filter_var($sender_email, FILTER_VALIDATE_EMAIL)) {
+  elseif (!filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
     $error = '正しいメールアドレスを入力してください。';}
    else {
     $stmt = $pdo->prepare("UPDATE mail_sender SET sender_name=?, sender_email=? WHERE id=1");
-    $stmt->execute([$sender_name, $sender_email]);
+    $stmt->execute([$senderName, $senderEmail]);
     $success = '送信者設定を保存しました。';
     $settings = $pdo->query("SELECT * FROM mail_sender LIMIT 1")->fetch();
   }

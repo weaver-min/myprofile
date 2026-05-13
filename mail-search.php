@@ -123,9 +123,9 @@ if (!is_array($selectedGroups)) {
               <div class="form-group">
                 <label class="form-label">顧客コード</label>
                 <div class="form-code-range">
-                <input type="text" name="code_from" class="form-control" placeholder="開始コード" value="<?= h($_GET['code_from'] ?? '') ?>">
+                <input type="text" name="codeFrom" class="form-control" placeholder="開始コード" value="<?= h($_GET['codeFrom'] ?? '') ?>">
                 <span class="form-sep">〜</span>
-                  <input type="text" name="code_to" class="form-control" placeholder="終了コード" value="<?= h($_GET['code_to'] ?? '') ?>">
+                  <input type="text" name="codeTo" class="form-control" placeholder="終了コード" value="<?= h($_GET['codeTo'] ?? '') ?>">
                 </div>
               </div>
             </div>

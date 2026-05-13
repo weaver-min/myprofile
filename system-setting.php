@@ -6,15 +6,15 @@ $error   = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pass_current = $_POST['pass_current'] ?? '';
-    $pass_new     = $_POST['pass_new'] ?? '';
-    $pass_confirm = $_POST['pass_confirm'] ?? '';
+    $passCurrent = $_POST['pass_current'] ?? '';
+    $passNew     = $_POST['pass_new'] ?? '';
+    $passConfirm = $_POST['pass_confirm'] ?? '';
 
-    if ($pass_current === '' || $pass_new === '' || $pass_confirm === '') {
+    if ($passCurrent === '' || $passNew === '' || $passConfirm === '') {
         $error = 'すべての項目を入力してください。';
-    } elseif ($pass_new !== $pass_confirm) {
+    } elseif ($passNew !== $passConfirm) {
         $error = '新しいパスワードが一致しません。';
-    } elseif (strlen($pass_new) < 6) {
+    } elseif (strlen($passNew) < 6) {
         $error = 'パスワードは6文字以上で入力してください。';
     } else {
         // verify current password
@@ -22,9 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$_SESSION['user_id']]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($pass_current, $user['password'])) {
+        if ($user && password_verify($passCurrent, $user['password'])) {
             // update password
-            $new_hash = password_hash($pass_new, PASSWORD_DEFAULT);
+            $new_hash = password_hash($passNew, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
             $stmt->execute([$new_hash, $_SESSION['user_id']]);
             $success = 'パスワードを変更しました。';

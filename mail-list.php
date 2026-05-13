@@ -3,8 +3,8 @@ require 'auth.php';
 require 'db.php';
 
 // get search params from mail-search.php
-$code_from = $_GET['code_from'] ?? '';
-$code_to   = $_GET['code_to'] ?? '';
+$codeFrom = $_GET['codeFrom'] ?? '';
+$codeTo   = $_GET['codeTo'] ?? '';
 $name      = $_GET['name'] ?? '';
 $kana      = $_GET['kana'] ?? '';
 $sex       = $_GET['sex'] ?? '';
@@ -21,8 +21,8 @@ $groups = array_values(array_intersect($groups, ['A', 'B', 'C', 'D']));
 $sql    = "SELECT * FROM customers WHERE stop = 0 AND mail <> ''";
 $params = [];
 
-if ($code_from !== '') { $sql .= " AND customer_id >= ?"; $params[] = (int)$code_from; }
-if ($code_to   !== '') { $sql .= " AND customer_id <= ?"; $params[] = (int)$code_to; }
+if ($codeFrom !== '') { $sql .= " AND customer_id >= ?"; $params[] = (int)$codeFrom; }
+if ($codeTo   !== '') { $sql .= " AND customer_id <= ?"; $params[] = (int)$codeTo; }
 if ($name      !== '') { $sql .= " AND name LIKE ?";      $params[] = '%'.$name.'%'; }
 if ($kana      !== '') { $sql .= " AND kana LIKE ?";      $params[] = '%'.$kana.'%'; }
 if ($sex       !== '') { $sql .= " AND sex = ?";          $params[] = $sex; }

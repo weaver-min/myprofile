@@ -13,8 +13,8 @@ $totalRows = (int) $totalStmt->fetchColumn();
 
 $totalPages = ceil($totalRows / $limit);
 
-$code_from = $_GET['code_from'] ?? '';
-$code_to = $_GET['code_to'] ?? '';
+$codeFrom = $_GET['codeFrom'] ?? '';
+$codeTo = $_GET['codeTo'] ?? '';
 $name = $_GET['name'] ?? '';
 $kana = $_GET['kana'] ?? '';
 $sex = $_GET['sex'] ?? '';
@@ -27,13 +27,13 @@ $stop = $_GET['stop'] ?? '';
 $sql = "SELECT * FROM customers WHERE 1=1";
 $params = [];
 // i used the '?' for sql injection protection
-if ($code_from !== '') {
+if ($codeFrom !== '') {
   $sql .= " AND customer_id >= ?";
-  $params[] = (int) $code_from;
+  $params[] = (int) $codeFrom;
 }
-if ($code_to !== '') {
+if ($codeTo !== '') {
   $sql .= " AND customer_id <= ?";
-  $params[] = (int) $code_to;
+  $params[] = (int) $codeTo;
 }
 if ($name !== '') {
   $sql .= " AND name LIKE ?";

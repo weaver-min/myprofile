@@ -19,8 +19,8 @@ $body  = $mailData['body'];
 
 // fetch sender settings
 $settings   = $pdo->query("SELECT * FROM mail_sender LIMIT 1")->fetch();
-$from_name  = $settings['sender_name'] ?? 'MailDeli';
-$from_email = $settings['sender_email'] ?? 'noreply@example.com';
+$fromName  = $settings['sender_name'] ?? 'MailDeli';
+$fromEmail = $settings['sender_email'] ?? 'noreply@example.com';
 
 // fetch customers
 $placeholders = implode(',', array_fill(0, count($send), '?'));
@@ -42,7 +42,7 @@ foreach ($customers as $c) {
     $filename = $sendmailDir . '/' . $timestamp . '_' . $c['customer_id'] . '.txt';
     $content  = "宛先: {$c['name']} <{$c['mail']}>\n";
     $content .= "件名: {$title}\n";
-    $content .= "送信者: {$from_name} <{$from_email}>\n";
+    $content .= "送信者: {$fromName} <{$fromEmail}>\n";
     $content .= "送信日時: " . date('Y-m-d H:i:s') . "\n";
     $content .= "---\n";
     $content .= $body;
@@ -50,7 +50,7 @@ foreach ($customers as $c) {
 
     // send actual email
     $subject  = mb_encode_mimeheader($title, 'UTF-8', 'B');
-    $headers  = "From: {$from_name} <{$from_email}>\r\n";
+    $headers  = "From: {$fromName} <{$fromEmail}>\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
     //mail($c['mail'], $subject, $body, $headers);
 }

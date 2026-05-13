@@ -1,4 +1,9 @@
 <?php
+/**
+ * 顧客入力データを正規化する
+ * @param array $data 入力データ
+ * @return array 正規化されたデータ
+ */
 function normalizeCustomerInput(array $data): array
 {
     return [
@@ -15,6 +20,11 @@ function normalizeCustomerInput(array $data): array
     ];
 }
 
+/**
+ * 顧客入力データを検証する
+ * @param array $data 正規化された入力データ
+ * @return array 検証エラーの配列
+ */
 function validateCustomerInput(array $data): array
 {
     $errors = [];
