@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>メール配信システム | TOP</title>
+<!-- TemplateEndEditable -->
+<script src="../SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
+<link href="../SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../css/reset.css">
+<link rel="stylesheet" href="../css/default.css">
+<link rel="stylesheet" href="../css/common.css">
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+</head>
+
+
+<body id="customer">
+
+  <div id="wrapper">
+    <div class="header mb30">
+      <h1 class="mb30"><a href="../top.html">メール配信システム</a></h1>
+      <div class="navi">
+        <ul id="MenuBar1" class="MenuBarHorizontal clearfix">
+          <li><a class="MenuBarItemSubmenu" href="#">顧客管理</a>
+            <ul>
+              <li><a href="#">顧客情報登録</a></li>
+              <li><a href="#">顧客情報検索</a></li>
+            </ul>
+          </li>
+          <li><a href="#" class="active">メール送信</a></li>
+          <li><a href="#">メールテンプレート</a></li>
+          <li><a href="#">メール管理</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- TemplateBeginEditable name="content" -->
+    <div class="contentBox mb15">
+        <div class="content1 mb15">
+            <h2 class="mb30">顧客登録情報</h2>
+            <div class="box">
+                <dl class="clearfix">
+                    <dt>Aグループ登録数</dt>
+                    <dd>テスト</dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>Bグループ登録数</dt>
+                    <dd>テスト</dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>Cグループ登録数</dt>
+                    <dd>111111111</dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>Dグループ登録数</dt>
+                    <dd></dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>配信停止数 </dt>
+                    <dd></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="content2 mb15">
+            <h2 class="mb30">メール履歴</h2>
+            <div class="box">
+                <dl class="clearfix">
+                    <dt>前回の送信日時</dt>
+                    <dd>テスト</dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>前回のメールタイトル</dt>
+                    <dd>テストテストテストテストテストテストテスト</dd>
+                </dl>
+                <p>
+                    <input type="button" class="burBluebutton" value="詳しく見る">
+                </p>
+            </div>
+        </div>
+        <div class="content3 mb15">
+            <h2 class="mb30">メール設定</h2>
+            <div class="box">
+                <dl class="clearfix">
+                    <dt>送信者名</dt>
+                    <dd>テスト</dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>送信アドレス</dt>
+                    <dd>テスト</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <!-- TemplateEndEditable --></div>
+<script type="text/javascript">
+var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", imgRight:"SpryAssets/SpryMenuBarRightHover.gif"});
+</script>
+</div>
+
+</body>
+</html>

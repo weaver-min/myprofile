@@ -1,0 +1,86 @@
+@charset "utf-8";
+/* CSS Document */
+
+body { font-family: Meiryo, Tahoma, Verdana, Arial, sans-serif; background:#F5F5F5; color:#383838; font-size:14px;}
+
+#wrapper { width:980px; margin:0 auto; }
+
+.header { margin-top:30px;}
+
+h1 { font-size:36px; font-weight:bold; color:#31ccc1; }
+
+h1 a:link { color:#31ccc1; text-decoration:none; }
+
+h1 a:visited { color:#31ccc1; }
+
+h1 a:hover { opacity:0.7; }
+
+h1 a:active { color:#31ccc1; }
+
+.clearfix:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+h2 { font-size:18px; font-weight:bold; letter-spacing:0.1em; }
+
+h3 { padding:10px 0px;  font-size:18px; font-weight:bold; letter-spacing:0.1em; padding:10px;}
+
+h4 { font-weight:bold; font-size:18px; color:#5EBABA; letter-spacing:0.1em; }
+
+h5 { border-bottom:1px solid #93B8CA; padding-bottom:3px; font-size:12px; font-weight:bold;}
+
+
+#top .content1 {  width:244px; word-wrap:break-word; float:left;   }
+
+#top .content2 { padding-left:1em; width:478px; word-wrap:break-word; float:left; border-left:1px dotted #737373; }
+
+#top .content2 .box p { 
+					margin-right:1em; text-align:right; margin-top:60px; font-size:12px; }
+
+#top .content3 { padding-left:1em; word-wrap:break-word; float:left; border-left:1px dotted #737373; }
+
+
+#top .select { padding:10px; background:#5EBABA; color:#fff; font-size:12px; letter-spacing:0.1em;
+          border-bottom:solid 1px #737373; font-weight:bold;}
+
+
+#top dt,dd { float:left; }
+
+#top dt { width:170px; }
+
+#top dd { font-weight:bold; }
+
+#top dt:before { content:">"; color:#93B8CA;  padding-right:5px;  }
+
+#top .box { min-height:150px; }
+
+#top .contentBox{ line-height:2; }
+
+.content7 table { width:100%; line-height:2;}
+
+.content7 th { border:solid 1px #888; }
+
+.content7 td { border:solid 1px #888; text-align:center; }
+
+
+.kisuu  { background:#FCDC9C; }
+
+.title { background:#93B8CA; font-weight:bold; letter-spacing:0.1em;}
+
+.mb5 { margin-bottom:5px; }
+
+.mb15 { margin-bottom:15px; }
+
+.mb30 { margin-bottom:30px; }
+
+.mb60 { margin-bottom:60px; }
+
+.mb80 { margin-bottom:80px; }
+
+.mr25 { margin-right:25px; }
+
+.mr5 { margin-right:5%; }
+
+.mr5 { margin-right:5px; }
