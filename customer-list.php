@@ -1,6 +1,7 @@
 <?php
-require 'db.php';
 require 'auth.php';
+require 'db.php';
+
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
 if ($page < 1) {
