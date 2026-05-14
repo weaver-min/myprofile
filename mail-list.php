@@ -2,6 +2,13 @@
 require 'auth.php';
 require 'db.php';
 
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+if ($page < 1)
+  $page = 1;
+
+$limit = 15;
+$offset = ($page - 1) * $limit;
+
 // get search params from mail-search.php
 $codeFrom = $_GET['codeFrom'] ?? '';
 $codeTo   = $_GET['codeTo'] ?? '';
@@ -37,12 +44,82 @@ if (!empty($groups)) {
     $params = array_merge($params, $groups);
 }
 
-$sql .= " ORDER BY customer_id ASC";
+$countSql = "SELECT COUNT(*) FROM customers WHERE stop = 0 AND mail <> ''";
+$countParams = [];
 
+if ($codeFrom !== '') {
+  $countSql .= " AND customer_id >= ?";
+  $countParams[] = (int) $codeFrom;
+}
+
+if ($codeTo !== '') {
+  $countSql .= " AND customer_id <= ?";
+  $countParams[] = (int) $codeTo;
+}
+
+if ($name !== '') {
+  $countSql .= " AND name LIKE ?";
+  $countParams[] = "%$name%";
+}
+
+if ($kana !== '') {
+  $countSql .= " AND kana LIKE ?";
+  $countParams[] = "%$kana%";
+}
+
+if ($sex !== '') {
+  $countSql .= " AND sex = ?";
+  $countParams[] = $sex;
+}
+
+if ($zip !== '') {
+  $countSql .= " AND zip LIKE ?";
+  $countParams[] = "%$zip%";
+}
+
+if ($address1 !== '') {
+  $countSql .= " AND address1 LIKE ?";
+  $countParams[] = "%$address1%";
+}
+
+if ($mail !== '') {
+  $countSql .= " AND mail LIKE ?";
+  $countParams[] = "%$mail%";
+}
+
+
+/* ---------------------------
+   EXECUTE COUNT
+---------------------------- */
+$countStmt = $pdo->prepare($countSql);
+
+foreach ($countParams as $i => $v) {
+  $type = is_int($v) ? PDO::PARAM_INT : PDO::PARAM_STR;
+  $countStmt->bindValue($i + 1, $v, $type);
+}
+$countStmt->execute();
+$totalRows = (int) $countStmt->fetchColumn();
+
+$totalPages = ceil($totalRows / $limit);
+$sql .= " ORDER BY customer_id ASC LIMIT ? OFFSET ?";
+$params[] = (int) $limit;
+$params[] = (int) $offset;
+
+/* ---------------------------
+   EXECUTE MAIN QUERY
+---------------------------- */
 $stmt = $pdo->prepare($sql);
-$stmt->execute($params);
+
+foreach ($params as $i => $v) {
+  $type = is_int($v) ? PDO::PARAM_INT : PDO::PARAM_STR;
+  $stmt->bindValue($i + 1, $v, $type);
+}
+
+$stmt->execute();
 $customers = $stmt->fetchAll();
+
 $count = count($customers);
+
 ?>
 <!doctype html>
 <html lang="ja">
@@ -188,6 +265,23 @@ $count = count($customers);
               <?php endif; ?>
             </tbody>
           </table>
+           <div class="pagination" style="padding:16px 24px;display:flex;gap:8px;justify-content:center;">
+            <?php if ($page > 1): ?>
+              <a href="?page=<?= $page - 1 ?>" class="btn btn-ghost btn-sm">← Prev</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+              <?php if ($i == $page): ?>
+                <strong class="btn btn-primary btn-sm"><?= $i ?></strong>
+              <?php else: ?>
+                <a href="?page=<?= $i ?>" class="btn btn-ghost btn-sm"><?= $i ?></a>
+              <?php endif; ?>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages): ?>
+              <a href="?page=<?= $page + 1 ?>" class="btn btn-ghost btn-sm">Next →</a>
+            <?php endif; ?>
+          </div>
         </div>
         <div style="padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;">
           <button type="button" class="btn btn-ghost"><a href="mail-search.php">戻る</a></button>
