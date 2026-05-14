@@ -6,9 +6,11 @@ $title = $_POST['title'] ?? '';
 $body = $_POST['body'] ?? '';
 $send = $_POST['send'] ?? [];
 
-if (empty($send)) {
-  header("Location: mail-list.php");
-  exit;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (empty($send)) {
+        header("Location: mail-list.php");
+        exit;
+    }
 }
 $templates = $pdo->query("SELECT * FROM mail_templates ORDER BY id ASC")->fetchAll();
 ?>
@@ -155,7 +157,7 @@ $templates = $pdo->query("SELECT * FROM mail_templates ORDER BY id ASC")->fetchA
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label">メール本文</label>
-              <<textarea name="body" class="form-control" rows="14" placeholder="メール本文を入力してください." required>
+              <textarea name="body" class="form-control" rows="14" placeholder="メール本文を入力してください." required>
                 <?= htmlspecialchars($body) ?></textarea>
 
                 <div class="form-footer">
