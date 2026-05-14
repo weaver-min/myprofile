@@ -180,6 +180,7 @@ $customers = $stmt->fetchAll();
             </svg>
             戻る
           </button>
+          </form>
           <a href="logout.php" class="btn btn-ghost btn-sm" onclick="return confirm('ログアウトしますか？')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round">
