@@ -2,8 +2,9 @@
 require 'auth.php';
 require 'db.php';
 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-if ($page < 1) $page = 1;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+if ($page < 1)
+  $page = 1;
 
 $limit = 15;
 $offset = ($page - 1) * $limit;
@@ -11,16 +12,16 @@ $offset = ($page - 1) * $limit;
 /* ---------------------------
    GET FILTERS
 ---------------------------- */
-$codeFrom  = $_GET['codeFrom'] ?? '';
-$codeTo    = $_GET['codeTo'] ?? '';
-$name      = $_GET['name'] ?? '';
-$kana      = $_GET['kana'] ?? '';
-$sex       = $_GET['sex'] ?? '';
-$group     = $_GET['group'] ?? '';
-$zip       = $_GET['zip'] ?? '';
-$address1  = $_GET['address1'] ?? '';
-$mail      = $_GET['mail'] ?? '';
-$stop      = $_GET['stop'] ?? '';
+$codeFrom = $_GET['codeFrom'] ?? '';
+$codeTo = $_GET['codeTo'] ?? '';
+$name = $_GET['name'] ?? '';
+$kana = $_GET['kana'] ?? '';
+$sex = $_GET['sex'] ?? '';
+$group = $_GET['group'] ?? '';
+$zip = $_GET['zip'] ?? '';
+$address1 = $_GET['address1'] ?? '';
+$mail = $_GET['mail'] ?? '';
+$stop = $_GET['stop'] ?? '';
 
 /* ---------------------------
    BUILD MAIN QUERY
@@ -29,52 +30,52 @@ $sql = "SELECT * FROM customers WHERE 1=1";
 $params = [];
 
 if ($codeFrom !== '') {
-    $sql .= " AND customer_id >= ?";
-    $params[] = (int)$codeFrom;
+  $sql .= " AND customer_id >= ?";
+  $params[] = (int) $codeFrom;
 }
 
 if ($codeTo !== '') {
-    $sql .= " AND customer_id <= ?";
-    $params[] = (int)$codeTo;
+  $sql .= " AND customer_id <= ?";
+  $params[] = (int) $codeTo;
 }
 
 if ($name !== '') {
-    $sql .= " AND name LIKE ?";
-    $params[] = "%$name%";
+  $sql .= " AND name LIKE ?";
+  $params[] = "%$name%";
 }
 
 if ($kana !== '') {
-    $sql .= " AND kana LIKE ?";
-    $params[] = "%$kana%";
+  $sql .= " AND kana LIKE ?";
+  $params[] = "%$kana%";
 }
 
 if ($sex !== '') {
-    $sql .= " AND sex = ?";
-    $params[] = $sex;
+  $sql .= " AND sex = ?";
+  $params[] = $sex;
 }
 
 if ($group !== '') {
-    $sql .= " AND `group` = ?";
-    $params[] = $group;
+  $sql .= " AND `group` = ?";
+  $params[] = $group;
 }
 
 if ($zip !== '') {
-    $sql .= " AND zip LIKE ?";
-    $params[] = "%$zip%";
+  $sql .= " AND zip LIKE ?";
+  $params[] = "%$zip%";
 }
 
 if ($address1 !== '') {
-    $sql .= " AND address1 LIKE ?";
-    $params[] = "%$address1%";
+  $sql .= " AND address1 LIKE ?";
+  $params[] = "%$address1%";
 }
 
 if ($mail !== '') {
-    $sql .= " AND mail LIKE ?";
-    $params[] = "%$mail%";
+  $sql .= " AND mail LIKE ?";
+  $params[] = "%$mail%";
 }
 
 if ($stop === '1') {
-    $sql .= " AND stop = 1";
+  $sql .= " AND stop = 1";
 }
 
 /* ---------------------------
@@ -84,52 +85,52 @@ $countSql = "SELECT COUNT(*) FROM customers WHERE 1=1";
 $countParams = [];
 
 if ($codeFrom !== '') {
-    $countSql .= " AND customer_id >= ?";
-    $countParams[] = (int)$codeFrom;
+  $countSql .= " AND customer_id >= ?";
+  $countParams[] = (int) $codeFrom;
 }
 
 if ($codeTo !== '') {
-    $countSql .= " AND customer_id <= ?";
-    $countParams[] = (int)$codeTo;
+  $countSql .= " AND customer_id <= ?";
+  $countParams[] = (int) $codeTo;
 }
 
 if ($name !== '') {
-    $countSql .= " AND name LIKE ?";
-    $countParams[] = "%$name%";
+  $countSql .= " AND name LIKE ?";
+  $countParams[] = "%$name%";
 }
 
 if ($kana !== '') {
-    $countSql .= " AND kana LIKE ?";
-    $countParams[] = "%$kana%";
+  $countSql .= " AND kana LIKE ?";
+  $countParams[] = "%$kana%";
 }
 
 if ($sex !== '') {
-    $countSql .= " AND sex = ?";
-    $countParams[] = $sex;
+  $countSql .= " AND sex = ?";
+  $countParams[] = $sex;
 }
 
 if ($group !== '') {
-    $countSql .= " AND `group` = ?";
-    $countParams[] = $group;
+  $countSql .= " AND `group` = ?";
+  $countParams[] = $group;
 }
 
 if ($zip !== '') {
-    $countSql .= " AND zip LIKE ?";
-    $countParams[] = "%$zip%";
+  $countSql .= " AND zip LIKE ?";
+  $countParams[] = "%$zip%";
 }
 
 if ($address1 !== '') {
-    $countSql .= " AND address1 LIKE ?";
-    $countParams[] = "%$address1%";
+  $countSql .= " AND address1 LIKE ?";
+  $countParams[] = "%$address1%";
 }
 
 if ($mail !== '') {
-    $countSql .= " AND mail LIKE ?";
-    $countParams[] = "%$mail%";
+  $countSql .= " AND mail LIKE ?";
+  $countParams[] = "%$mail%";
 }
 
 if ($stop === '1') {
-    $countSql .= " AND stop = 1";
+  $countSql .= " AND stop = 1";
 }
 
 /* ---------------------------
@@ -138,12 +139,12 @@ if ($stop === '1') {
 $countStmt = $pdo->prepare($countSql);
 
 foreach ($countParams as $i => $v) {
-    $type = is_int($v) ? PDO::PARAM_INT : PDO::PARAM_STR;
-    $countStmt->bindValue($i + 1, $v, $type);
+  $type = is_int($v) ? PDO::PARAM_INT : PDO::PARAM_STR;
+  $countStmt->bindValue($i + 1, $v, $type);
 }
 
 $countStmt->execute();
-$totalRows = (int)$countStmt->fetchColumn();
+$totalRows = (int) $countStmt->fetchColumn();
 
 $totalPages = ceil($totalRows / $limit);
 
@@ -151,8 +152,8 @@ $totalPages = ceil($totalRows / $limit);
    ADD PAGINATION TO MAIN QUERY
 ---------------------------- */
 $sql .= " ORDER BY customer_id ASC LIMIT ? OFFSET ?";
-$params[] = (int)$limit;
-$params[] = (int)$offset;
+$params[] = (int) $limit;
+$params[] = (int) $offset;
 
 /* ---------------------------
    EXECUTE MAIN QUERY
@@ -160,8 +161,8 @@ $params[] = (int)$offset;
 $stmt = $pdo->prepare($sql);
 
 foreach ($params as $i => $v) {
-    $type = is_int($v) ? PDO::PARAM_INT : PDO::PARAM_STR;
-    $stmt->bindValue($i + 1, $v, $type);
+  $type = is_int($v) ? PDO::PARAM_INT : PDO::PARAM_STR;
+  $stmt->bindValue($i + 1, $v, $type);
 }
 
 $stmt->execute();
@@ -343,7 +344,6 @@ $count = count($customers);
         </div>
         <a href="customer-search.php" class="btn btn-ghost btn-sm">条件を変更</a>
       </div>
-
       <div class="card">
         <div class="table-wrap">
           <table class="tbl">
@@ -356,29 +356,7 @@ $count = count($customers);
                 <th>メールアドレス</th>
                 <th>グループ</th>
                 <th>配信停止</th>
-                <th>
-                  <div class="pagination">
-
-                    <?php if ($page > 1): ?>
-                      <a href="?page=<?= $page - 1 ?>" style="font-size:20px; font-weight:700;">← Prev</a>
-                    <?php endif; ?>
-
-                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-
-                      <?php if ($i == $page): ?>
-                        <strong style="font-size:20px;"><?= $i ?></strong>
-                      <?php else: ?>
-                        <a href="?page=<?= $i ?>"><?= $i ?></a>
-                      <?php endif; ?>
-
-                    <?php endfor; ?>
-
-                    <?php if ($page < $totalPages): ?>
-                      <a href="?page=<?= $page + 1 ?>" style="font-size:20px; font-weight:700;">Next →</a>
-                    <?php endif; ?>
-
-                  </div>
-                </th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -414,6 +392,23 @@ $count = count($customers);
               <?php endif; ?>
             </tbody>
           </table>
+          <div class="pagination" style="padding:16px 24px;display:flex;gap:8px;justify-content:center;">
+            <?php if ($page > 1): ?>
+              <a href="?page=<?= $page - 1 ?>" class="btn btn-ghost btn-sm">← Prev</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+              <?php if ($i == $page): ?>
+                <strong class="btn btn-primary btn-sm"><?= $i ?></strong>
+              <?php else: ?>
+                <a href="?page=<?= $i ?>" class="btn btn-ghost btn-sm"><?= $i ?></a>
+              <?php endif; ?>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages): ?>
+              <a href="?page=<?= $page + 1 ?>" class="btn btn-ghost btn-sm">Next →</a>
+            <?php endif; ?>
+          </div>
         </div>
       </div>
     </div>
