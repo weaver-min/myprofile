@@ -1,6 +1,10 @@
 <?php
 require 'auth.php';
-
+/**
+ * 顧客情報登録画面
+ * - 入力内容をセッションに保存して確認画面へ
+ * - 確認画面でエラーがあった場合はセッションから値を復元して再表示
+ */
 $old = $_SESSION['form_data'] ?? [];
 $formErrors = $_SESSION['form_errors'] ?? [];
 unset($_SESSION['form_errors']);
@@ -182,6 +186,7 @@ if (isset($_GET['clear'])) {
           <div class="page-subtitle">新しい顧客情報を入力してください</div>
         </div>
       </div>
+      <!-- /* フォームエラーがある場合は表示 */ -->
       <?php if ($formErrors): ?>
         <div class="alert alert-danger">
           <?= implode('<br>', array_map('htmlspecialchars', $formErrors)) ?>

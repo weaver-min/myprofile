@@ -3,6 +3,12 @@ require 'auth.php';
 require 'db.php';
 
 // fetch group counts
+/* - データベースから各グループの登録数を取得するクエリを実行する
+ - 例えば、Aグループの登録数を取得するには、「SELECT COUNT(*) FROM customers WHERE `group` = 'A'」というクエリを実行する
+ - 同様に、Bグループ、Cグループ、Dグループの登録数も取得する
+ - 配信停止数も同様に「SELECT COUNT(*) FROM customers WHERE stop = 1」というクエリで取得する
+ - 取得した各グループの登録数と配信停止数を変数に保存しておく
+*/
 $groupA = $pdo->query("SELECT COUNT(*) FROM customers WHERE `group` = 'A'")->fetchColumn();
 $groupB = $pdo->query("SELECT COUNT(*) FROM customers WHERE `group` = 'B'")->fetchColumn();
 $groupC = $pdo->query("SELECT COUNT(*) FROM customers WHERE `group` = 'C'")->fetchColumn();
@@ -10,6 +16,11 @@ $groupD = $pdo->query("SELECT COUNT(*) FROM customers WHERE `group` = 'D'")->fet
 $stopped = $pdo->query("SELECT COUNT(*) FROM customers WHERE stop = 1")->fetchColumn();
 
 // add these after group counts
+/* - メール送信設定とメール送信履歴をデータベースから取得する
+ - mail_senderテーブルから送信者名と送信アドレスを取得するクエリを実行する
+ - mail_historyテーブルから最新の送信履歴を取得するクエリを実行する
+ - 取得した送信者名、送信アドレス、最新の送信日時、最新のメールタイトルを変数に保存しておく
+*/
 $settings = $pdo->query("SELECT * FROM mail_sender LIMIT 1")->fetch();
 $lastMail = $pdo->query("SELECT * FROM mail_history ORDER BY sent_at DESC LIMIT 1")->fetch();
 // fetch last mail history (if you have a mail history table)

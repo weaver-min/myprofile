@@ -4,6 +4,11 @@
  * @param array $data 入力データ
  * @return array 正規化されたデータ
  */
+/* - trim()で前後の空白を削除
+ - 存在しないキーは空文字列に置き換える
+ - 配信停止はチェックボックスなので、存在する場合は1、存在しない場合は0に変換する
+*/
+
 function normalizeCustomerInput(array $data): array
 {
     return [
@@ -25,6 +30,10 @@ function normalizeCustomerInput(array $data): array
  * @param array $data 正規化された入力データ
  * @return array 検証エラーの配列
  */
+/* - 顧客名、フリガナ、性別、グループ、メールアドレスは必須項目
+ - フリガナは日本語のひらがな・カタカナで入力されているか
+ - メールアドレスは正しい形式で入力されているか
+*/
 function validateCustomerInput(array $data): array
 {
     $errors = [];
@@ -57,6 +66,16 @@ function validateCustomerInput(array $data): array
     return $errors;
 }
 
+/**
+ * メールアドレスの形式を検証する
+ * @param string $mail メールアドレス
+ * @return bool 有効なメールアドレス形式であればtrue、そうでなければfalse
+ */
+/* - filter_var()で基本的なメールアドレスの形式を検証
+ - ローカル部とドメイン部の長さをチェック
+ - ドットが連続していないかをチェック
+ - より厳密な正規表現で全体の形式を検証
+*/
 function isValidCustomerEmail(string $mail): bool
 {
     if (strlen($mail) > 254 || !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
@@ -74,6 +93,17 @@ function isValidCustomerEmail(string $mail): bool
     );
 }
 
+/**
+ * メールアドレスの重複を検査する
+ * @param PDO $pdo データベース接続オブジェクト
+ * @param string $mail チェックするメールアドレス
+ * @param int $excludeId チェックから除外する顧客ID（編集時に自身のメールアドレスを除外するため）
+ * @return bool 重複がある場合はtrue、そうでなければfalse
+ */
+/* - customersテーブルから指定されたメールアドレスを持つレコードの数をカウント
+ - 編集時は自身の顧客IDを除外してカウント
+ - カウントが0より大きい場合は重複があると判断
+*/
 function findDuplicateCustomer(PDO $pdo, string $mail, int $excludeId = 0): bool
 {
         $sql = 'SELECT COUNT(*) FROM customers WHERE mail = ?';

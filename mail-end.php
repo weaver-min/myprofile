@@ -1,6 +1,12 @@
 <?php
 require 'auth.php';
-
+/* - mail-work.phpからPOSTされたデータを受け取る
+ - 送信先の顧客IDの配列、メールタイトル、メール本文を取得する
+ - 送信先が空、タイトルが空、本文が空の場合はmail-work.phpにリダイレクトする
+ - 正常な場合はセッションに保存して確認画面へリダイレクトする
+ - 確認画面ではセッションからデータを取得して表示する
+ - 確認画面で「送信する」ボタンが押されたらmail-send.phpにPOSTして実際の送信処理を行う
+*/
 if (!isset($_GET['success'])) {
   header("Location: mail-search.php");
   exit;

@@ -6,7 +6,7 @@ require 'customer-validation.php';
 $data = normalizeCustomerInput($_POST);
 $data['stop'] = isset($_POST['stop']) ? 1 : 0;
 
-//もし　確認ページになってデータをなくなりたい場合は　unset($_SESSION['form_data']);
+//もし　確認ページになってデータを消したい場合は　unset($_SESSION['form_data']);
 $_SESSION['form_data'] = $data;
 
 $errors = validateCustomerInput($data);

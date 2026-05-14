@@ -365,27 +365,27 @@ $count = count($customers);
                   <td colspan="7" style="text-align:center; color:var(--text-muted);">該当する顧客が見つかりませんでした</td>
                 </tr>
               <?php else: ?>
-                <?php foreach ($customers as $c): ?>
+                <?php foreach ($customers as $customer): ?>
                   <tr>
-                    <td><span class="badge badge-gray"><?= htmlspecialchars($c['customer_id']) ?></span></td>
+                    <td><span class="badge badge-gray"><?= htmlspecialchars($customer['customer_id']) ?></span></td>
                     <td>
-                      <a href="customer-detail.php?id=<?= $c['customer_id'] ?>" style="color:var(--text);font-weight:600;">
-                        <?= htmlspecialchars($c['name']) ?>
+                      <a href="customer-detail.php?id=<?= $customer['customer_id'] ?>" style="color:var(--text);font-weight:600;">
+                        <?= htmlspecialchars($customer['name']) ?>
                       </a>
                     </td>
-                    <td class="text-muted"><?= htmlspecialchars($c['kana']) ?></td>
-                    <td><?= htmlspecialchars($c['sex']) ?></td>
-                    <td><?= htmlspecialchars($c['mail']) ?></td>
-                    <td><span class="badge badge-indigo"><?= htmlspecialchars($c['group']) ?></span></td>
+                    <td class="text-muted"><?= htmlspecialchars($customer['kana']) ?></td>
+                    <td><?= htmlspecialchars($customer['sex']) ?></td>
+                    <td><?= htmlspecialchars($customer['mail']) ?></td>
+                    <td><span class="badge badge-indigo"><?= htmlspecialchars($customer['group']) ?></span></td>
                     <td>
-                      <?php if ($c['stop']): ?>
+                      <?php if ($customer['stop']): ?>
                         <span class="badge badge-red">停止中</span>
                       <?php else: ?>
                         <span class="badge badge-green">配信中</span>
                       <?php endif; ?>
                     </td>
                     <td style="text-align:right;">
-                      <a href="customer-detail.php?id=<?= $c['customer_id'] ?>" class="btn btn-secondary btn-sm">詳細</a>
+                      <a href="customer-detail.php?id=<?= $customer['customer_id'] ?>" class="btn btn-secondary btn-sm">詳細</a>
                     </td>
                   </tr>
                 <?php endforeach; ?>

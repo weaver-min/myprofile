@@ -2,6 +2,8 @@
 require 'auth.php';
 require 'db.php';
 // receive selected customer IDs from mail-list.php
+$title = $_POST['title'] ?? '';
+$body = $_POST['body'] ?? '';
 $send = $_POST['send'] ?? [];
 
 if (empty($send)) {
@@ -133,18 +135,19 @@ $templates = $pdo->query("SELECT * FROM mail_templates ORDER BY id ASC")->fetchA
 
             <div class="form-group">
               <label class="form-label">メールタイトル</label>
-              <input type="text" name="title" class="form-control" placeholder="メールの件名を入力" required>
+              <input type="text" name="title" class="form-control" placeholder="メールの件名を入力"
+                value="<?= htmlspecialchars($title) ?>" required>
             </div>
             <!-- template buttons -->
             <div class="form-group">
               <label class="form-label">テンプレートを使用する</label>
               <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <?php foreach ($templates as $t): ?>
-                  <?php if ($t['template_name'] !== ''): ?>
+                <?php foreach ($templates as $template): ?>
+                  <?php if ($template['template_name'] !== ''): ?>
                     <button type="button" class="btn btn-ghost btn-sm tmpl-btn"
-                      data-name="<?= htmlspecialchars($t['template_name']) ?>"
-                      data-body="<?= htmlspecialchars($t['template_body']) ?>">
-                      <?= htmlspecialchars($t['template_name']) ?>
+                      data-name="<?= htmlspecialchars($template['template_name']) ?>"
+                      data-body="<?= htmlspecialchars($template['template_body']) ?>">
+                      <?= htmlspecialchars($template['template_name']) ?>
                     </button>
                   <?php endif; ?>
                 <?php endforeach; ?>
@@ -152,31 +155,34 @@ $templates = $pdo->query("SELECT * FROM mail_templates ORDER BY id ASC")->fetchA
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label">メール本文</label>
-              <textarea name="body" class="form-control" rows="14" placeholder="メール本文を入力してください。" required></textarea>
-            </div>
+              <<textarea name="body" class="form-control" rows="14" placeholder="メール本文を入力してください." required>
+                <?= htmlspecialchars($body) ?></textarea>
 
-            <div class="form-footer">
-              <a href="mail-template.php" class="btn btn-ghost">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                  <polyline points="14 2 14 8 20 8" />
-                </svg>
-                テンプレートを参照
-              </a>
-              <button type="submit" class="btn btn-primary btn-lg">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-                送信確認へ
-              </button>
-            </div>
+                <div class="form-footer">
+                  <a href="mail-template.php" class="btn btn-ghost">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    テンプレートを参照
+                  </a>
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                    送信確認へ
+                  </button>
+                </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+  <!-- /* - テンプレートボタンをクリックしたときのJavaScriptコードを追加する
+   - クリックされたテンプレートのデータ属性からタイトルと本文を取得して、フォームの入力欄にセットする
+   - これにより、ユーザーはテンプレートをクリックするだけでメールの内容を簡単に入力できるようになる */ -->
   <script>
     // This function for Copy the template
     document.querySelectorAll('.tmpl-btn').forEach(function (btn) {

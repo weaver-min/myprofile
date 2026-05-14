@@ -8,12 +8,16 @@ $error   = '';
 // fetch all 3 templates
 $stmt = $pdo->query("SELECT * FROM mail_templates ORDER BY id ASC");
 $templates = $stmt->fetchAll();
-
+/* - mail_templatesテーブルから全てのテンプレートを取得し、$templates配列に格納する
+ - 取得したテンプレートは、IDの昇順で並べ替える
+ - テンプレートは3件分用意されているが、将来的に増やすことも考慮して、ループで処理できるようにする
+*/
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['delete_all'])) {
         $pdo->query("UPDATE mail_templates SET template_name='', template_body=''");
         $success = '全件削除しました。';
-    } else {
+    } 
+    else {
         for ($i = 0; $i < 3; $i++) {
             $id   = $templates[$i]['id'];
             $name = $_POST['name'][$i] ?? '';
@@ -92,23 +96,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="card-body">
         <?php if ($success): ?>
         <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
-        <?php endif; ?>
-
+        <?php endif; ?> 
         <form method="post" action="mail-template.php">
-          <?php foreach ($templates as $i => $t): ?>
-          <?php if ($i > 0): ?><hr class="divider"><?php endif; ?>
-          <div class="tmpl-section" <?= $i === count($templates)-1 ? 'style="margin-bottom:0;"' : '' ?>>
+          <!-- /* - 3件分のテンプレートをループで表示する
+           - 各テンプレートは、テンプレート名の入力欄とテンプレート本文のテキストエリアからなる
+           - 最後のテンプレートの下には区切り線を表示しない
+           - フォームの下部には、「全件削除」ボタンと「すべて保存」ボタンを配置する
+           - 「全件削除」ボタンは、クリックすると全てのテンプレートを削除するtemplate_nameとtemplate_bodyを空にする
+           - 「すべて保存」ボタンは、クリックすると現在の入力内容を保存する（更新する）
+           - ボタンをクリックしたときの確認ダイアログを追加する（例: 「全件削除しますか？」、「保存しますか？」など） */   -->
+          <?php foreach ($templates as $index => $template): ?>
+          <?php if ($index > 0): ?><hr class="divider"><?php endif; ?>
+          <div class="tmpl-section" <?= $index === count($templates)-1 ? 'style="margin-bottom:0;"' : '' ?>>
             <div class="tmpl-header">
-              <div class="tmpl-num"><?= $i+1 ?></div>
-              <div class="tmpl-label">テンプレート <?= $i+1 ?></div>
+              <div class="tmpl-num"><?= $index+1 ?></div>
+              <div class="tmpl-label">テンプレート <?= $index+1 ?></div>
             </div>
             <div class="form-group">
               <label class="form-label">テンプレート名</label>
-              <input type="text" name="name[]" class="form-control" placeholder="テンプレート名を入力" value="<?= htmlspecialchars($t['template_name']) ?>">
+              <input type="text" name="name[]" class="form-control" placeholder="テンプレート名を入力" value="<?= htmlspecialchars($template['template_name']) ?>">
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label">テンプレート本文</label>
-              <textarea name="body[]" class="form-control" rows="8"><?= htmlspecialchars($t['template_body']) ?></textarea>
+              <textarea name="body[]" class="form-control" rows="8"><?= htmlspecialchars($template['template_body']) ?></textarea>
             </div>
           </div>
           <?php endforeach; ?>

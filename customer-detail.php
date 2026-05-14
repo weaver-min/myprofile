@@ -10,14 +10,13 @@ if ($id === 0) {
     header("Location: customer-list.php");
     exit;
 }
-// c is customer $c declare in customer-list.php
 // fetch customer from DB
 $stmt = $pdo->prepare("SELECT * FROM customers WHERE customer_id = ?");
 $stmt->execute([$id]);
-$c = $stmt->fetch();
+$customer = $stmt->fetch();
 
 // if customer not found redirect back to list
-if (!$c) {
+if (!$customer) {
     header("Location: customer-list.php");
     exit;
 }
@@ -112,7 +111,7 @@ if (!$c) {
       <li><span class="current">顧客情報詳細</span></li>
     </ol>
     <div class="topbar-right">
-      <a href="customer-edit.php?id=<?= $c['customer_id'] ?>" class="btn btn-secondary btn-sm">
+      <a href="customer-edit.php?id=<?= $customer['customer_id'] ?>" class="btn btn-secondary btn-sm">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         編集
       </a>
@@ -135,7 +134,7 @@ if (!$c) {
     <div class="page-header">
       <div>
         <div class="page-title">顧客情報詳細</div>
-        <div class="page-subtitle">顧客コード：<?= htmlspecialchars($c['customer_id']) ?></div>
+        <div class="page-subtitle">顧客コード：<?= htmlspecialchars($customer['customer_id']) ?></div>
       </div>
     </div>
 
@@ -145,43 +144,43 @@ if (!$c) {
           <div>
             <div class="form-group">
               <div class="form-label">顧客名</div>
-              <div class="info-box"><?= htmlspecialchars($c['name']) ?></div>
+              <div class="info-box"><?= htmlspecialchars($customer['name']) ?></div>
             </div>
             <div class="form-group">
               <div class="form-label">フリガナ</div>
-              <div class="info-box"><?= htmlspecialchars($c['kana']) ?></div>
+              <div class="info-box"><?= htmlspecialchars($customer['kana']) ?></div>
             </div>
             <div class="form-group">
               <div class="form-label">性別</div>
-              <div class="info-box"><?= htmlspecialchars($c['sex']) ?></div>
+              <div class="info-box"><?= htmlspecialchars($customer['sex']) ?></div>
             </div>
             <div class="form-group">
               <div class="form-label">グループ</div>
-              <div class="info-box"><?= htmlspecialchars($c['group']) ?></div>
+              <div class="info-box"><?= htmlspecialchars($customer['group']) ?></div>
             </div>
           </div>
 
           <div>
             <div class="form-group">
               <div class="form-label">郵便番号</div>
-              <div class="info-box"><?= htmlspecialchars($c['zip']) ?></div>
+              <div class="info-box"><?= htmlspecialchars($customer['zip']) ?></div>
             </div>
             <div class="form-group">
               <div class="form-label">住所1</div>
-              <div class="info-box"><?= htmlspecialchars($c['address1']) ?></div>
+              <div class="info-box"><?= htmlspecialchars($customer['address1']) ?></div>
             </div>
             <div class="form-group">
               <div class="form-label">住所2</div>
-              <div class="info-box"><?= htmlspecialchars($c['address2']) ?></div>
+              <div class="info-box"><?= htmlspecialchars($customer['address2']) ?></div>
             </div>
             <div class="form-group">
               <div class="form-label">メールアドレス</div>
-              <div class="info-box"><?= htmlspecialchars($c['mail']) ?></div>
+              <div class="info-box"><?= htmlspecialchars($customer['mail']) ?></div>
             </div>
             <div class="form-group">
               <div class="form-label">配信停止</div>
               <div class="info-box">
-                <?php if ($c['stop']): ?>
+                <?php if ($customer['stop']): ?>
                   <span class="badge badge-red">停止中</span>
                 <?php else: ?>
                   <span class="badge badge-green">配信中</span>
@@ -193,7 +192,7 @@ if (!$c) {
           <div class="form-full">
             <div class="form-group" style="margin-bottom:0;">
               <div class="form-label">備考</div>
-              <div class="info-box" style="min-height:80px;"><?= htmlspecialchars($c['note']) ?></div>
+              <div class="info-box" style="min-height:80px;"><?= htmlspecialchars($customer['note']) ?></div>
             </div>
           </div>
         </div>

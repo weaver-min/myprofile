@@ -1,10 +1,20 @@
 <?php
 require 'auth.php';
-
-function h($value) {
-  return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+/* - mail-work.phpからPOSTされたデータを受け取る
+ - 送信先の顧客IDの配列、メールタイトル、メール本文を取得する
+ - 送信先が空、タイトルが空、本文が空の場合はmail-work.phpにリダイレクトする
+ - 正常な場合はセッションに保存して確認画面へリダイレクトする
+ - 確認画面ではセッションからデータを取得して表示する
+ - 確認画面で「送信する」ボタンが押されたらmail-send.phpにPOSTして実際の送信処理を行う
+*/
+function h(string $value): string {
+  return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
-
+/* - GETパラメータから検索条件を取得する
+ - 顧客コードの開始と終了、顧客名、フリガナ、性別、郵便番号、住所1、メールアドレス、顧客グループの条件を取得する
+ - 顧客グループは複数選択可能なので配列で受け取る
+ - 受け取った値はXSS対策のためにHTMLエスケープして表示する
+*/
 $selectedGroups = $_GET['group'] ?? [];
 if (!is_array($selectedGroups)) {
   $selectedGroups = [$selectedGroups];

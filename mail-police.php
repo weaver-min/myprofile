@@ -1,7 +1,13 @@
 <?php
 require 'auth.php';
 require 'db.php';
-
+/* - mail-work.phpからPOSTされたデータを受け取る
+ - 送信先の顧客IDの配列、メールタイトル、メール本文を取得する
+ - 送信先が空、タイトルが空、本文が空の場合はmail-work.phpにリダイレクトする
+ - 正常な場合はセッションに保存して確認画面へリダイレクトする
+ - 確認画面ではセッションからデータを取得して表示する
+ - 確認画面で「送信する」ボタンが押されたらmail-send.phpにPOSTして実際の送信処理を行う
+*/
 $error = '';
 $success = '';
 
@@ -152,6 +158,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div
               style="background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:13px;">
               <?= htmlspecialchars($error) ?></div>
+              /* - エラーメッセージがある場合は赤い背景のボックスで表示する
+               - 成功メッセージがある場合は緑の背景のボックスで表示する
+               - どちらもない場合は何も表示しない */
           <?php endif; ?>
           <?php if ($success): ?>
             <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
