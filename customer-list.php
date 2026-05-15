@@ -1,7 +1,9 @@
 <?php
 require 'auth.php';
 require 'db.php';
-
+/* ---------------------------
+   PAGINATION SETUP 
+---------------------------- */
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 if ($page < 1)
   $page = 1;
@@ -33,54 +35,48 @@ if ($codeFrom !== '') {
   $sql .= " AND customer_id >= ?";
   $params[] = (int) $codeFrom;
 }
-
 if ($codeTo !== '') {
   $sql .= " AND customer_id <= ?";
   $params[] = (int) $codeTo;
 }
-
 if ($name !== '') {
   $sql .= " AND name LIKE ?";
   $params[] = "%$name%";
 }
-
 if ($kana !== '') {
   $sql .= " AND kana LIKE ?";
   $params[] = "%$kana%";
 }
-
 if ($sex !== '') {
   $sql .= " AND sex = ?";
   $params[] = $sex;
 }
-
 if ($group !== '') {
   $sql .= " AND `group` = ?";
   $params[] = $group;
 }
-
 if ($zip !== '') {
   $sql .= " AND zip LIKE ?";
   $params[] = "%$zip%";
 }
-
 if ($address1 !== '') {
   $sql .= " AND address1 LIKE ?";
   $params[] = "%$address1%";
 }
-
 if ($mail !== '') {
   $sql .= " AND mail LIKE ?";
   $params[] = "%$mail%";
 }
-
 if ($stop === '1') {
   $sql .= " AND stop = 1";
 }
-
 /* ---------------------------
    COUNT QUERY (IMPORTANT FIX)
 ---------------------------- */
+/* 
+   ここで、同じWHERE条件を使って総件数を取得するクエリを実行します。
+   これにより、ページネーションが正しく機能し、ユーザーが全体の件数を把握できるようになります。
+*/
 $countSql = "SELECT COUNT(*) FROM customers WHERE 1=1";
 $countParams = [];
 
@@ -142,7 +138,6 @@ foreach ($countParams as $i => $v) {
   $type = is_int($v) ? PDO::PARAM_INT : PDO::PARAM_STR;
   $countStmt->bindValue($i + 1, $v, $type);
 }
-
 $countStmt->execute();
 $totalRows = (int) $countStmt->fetchColumn();
 
@@ -151,6 +146,10 @@ $totalPages = ceil($totalRows / $limit);
 /* ---------------------------
    ADD PAGINATION TO MAIN QUERY
 ---------------------------- */
+/* 
+   最後に、メインのSELECTクエリにORDER BYとLIMITを追加して、ページネーションを適用します。
+   これにより、ユーザーが指定したページに対応する顧客情報のみが取得されます。
+*/
 $sql .= " ORDER BY customer_id ASC LIMIT ? OFFSET ?";
 $params[] = (int) $limit;
 $params[] = (int) $offset;
@@ -393,6 +392,7 @@ $count = count($customers);
             </tbody>
           </table>
           <div class="pagination" style="padding:16px 24px;display:flex;gap:8px;justify-content:center;">
+               <!-- ページネーションします。1ページあたり15件で、 -->
             <?php if ($page > 1): ?>
               <a href="?page=<?= $page - 1 ?>" class="btn btn-ghost btn-sm">← Prev</a>
             <?php endif; ?>

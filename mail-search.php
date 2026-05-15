@@ -1,13 +1,6 @@
 <?php
 require 'auth.php';
-/* - mail-work.phpからPOSTされたデータを受け取る
- - 送信先の顧客IDの配列、メールタイトル、メール本文を取得する
- - 送信先が空、タイトルが空、本文が空の場合はmail-work.phpにリダイレクトする
- - 正常な場合はセッションに保存して確認画面へリダイレクトする
- - 確認画面ではセッションからデータを取得して表示する
- - 確認画面で「送信する」ボタンが押されたらmail-send.phpにPOSTして実際の送信処理を行う
-*/
-function h(string $value): string {
+function find(string $value): string {
   return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 /* - GETパラメータから検索条件を取得する
@@ -133,20 +126,20 @@ if (!is_array($selectedGroups)) {
               <div class="form-group">
                 <label class="form-label">顧客コード</label>
                 <div class="form-code-range">
-                <input type="text" name="codeFrom" class="form-control" placeholder="開始コード" value="<?= h($_GET['codeFrom'] ?? '') ?>">
+                <input type="text" name="codeFrom" class="form-control" placeholder="開始コード" value="<?= find($_GET['codeFrom'] ?? '') ?>">
                 <span class="form-sep">〜</span>
-                  <input type="text" name="codeTo" class="form-control" placeholder="終了コード" value="<?= h($_GET['codeTo'] ?? '') ?>">
+                  <input type="text" name="codeTo" class="form-control" placeholder="終了コード" value="<?= find($_GET['codeTo'] ?? '') ?>">
                 </div>
               </div>
             </div>
 
             <div class="form-group">
               <label class="form-label">顧客名</label>
-              <input type="text" name="name" class="form-control" placeholder="顧客名で検索" value="<?= h($_GET['name'] ?? '') ?>">
+              <input type="text" name="name" class="form-control" placeholder="顧客名で検索" value="<?= find($_GET['name'] ?? '') ?>">
             </div>
             <div class="form-group">
               <label class="form-label">フリガナ</label>
-              <input type="text" name="kana" class="form-control" placeholder="フリガナで検索" value="<?= h($_GET['kana'] ?? '') ?>">
+              <input type="text" name="kana" class="form-control" placeholder="フリガナで検索" value="<?= find($_GET['kana'] ?? '') ?>">
             </div>
 
             <div class="form-group">
@@ -159,16 +152,16 @@ if (!is_array($selectedGroups)) {
             </div>
             <div class="form-group">
               <label class="form-label">郵便番号</label>
-              <input type="text" name="zip" class="form-control" placeholder="例：100-0001" value="<?= h($_GET['zip'] ?? '') ?>" style="max-width:180px;">
+              <input type="text" name="zip" class="form-control" placeholder="例：100-0001" value="<?= find($_GET['zip'] ?? '') ?>" style="max-width:180px;">
             </div>
 
             <div class="form-group">
               <label class="form-label">住所1</label>
-              <input type="text" name="address1" class="form-control" placeholder="都道府県・市区町村" value="<?= h($_GET['address1'] ?? '') ?>">
+              <input type="text" name="address1" class="form-control" placeholder="都道府県・市区町村" value="<?= find($_GET['address1'] ?? '') ?>">
             </div>
             <div class="form-group">
               <label class="form-label">メールアドレス</label>
-              <input type="text" name="mail" class="form-control" placeholder="example@domain.com" value="<?= h($_GET['mail'] ?? '') ?>">
+              <input type="text" name="mail" class="form-control" placeholder="example@domain.com" value="<?= find($_GET['mail'] ?? '') ?>">
             </div>
 
             <div class="form-full">

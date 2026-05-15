@@ -10,7 +10,10 @@ if ($id === 0) {
   header("Location: customer-list.php");
   exit;
 }
-
+/*
+   顧客IDに基づいて顧客情報をデータベースから取得します。
+   もし該当する顧客が存在しない場合は、一覧ページにリダイレクトします。
+*/
 $stmt = $pdo->prepare("SELECT * FROM customers WHERE customer_id = ?");
 $stmt->execute([$id]);
 $customer = $stmt->fetch();
@@ -18,6 +21,10 @@ $formErrors = $_SESSION['form_errors'] ?? [];
 $old = $_SESSION['form_data'] ?? [];
 
 unset($_SESSION['form_errors'], $_SESSION['form_data']);
+/*
+   顧客情報が見つからない場合は、一覧ページにリダイレクトします。
+   これにより、存在しない顧客の編集ページにアクセスすることを防ぎます。
+*/
 if (!$customer) {
   header("Location: customer-list.php");
   exit;

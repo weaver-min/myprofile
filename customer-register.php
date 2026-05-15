@@ -8,7 +8,7 @@ require 'auth.php';
 $old = $_SESSION['form_data'] ?? [];
 $formErrors = $_SESSION['form_errors'] ?? [];
 unset($_SESSION['form_errors']);
-
+// クリア処理
 if (isset($_GET['clear'])) {
   unset($_SESSION['form_data']);
   header("Location: customer-register.php");
