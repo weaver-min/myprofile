@@ -34,9 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && password_verify($passCurrent, $user['password'])) {
       // update password
-      $new_hash = password_hash($passNew, PASSWORD_DEFAULT);
+      $newHash = password_hash($passNew, PASSWORD_DEFAULT);
       $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
-      $stmt->execute([$new_hash, $_SESSION['user_id']]);
+      $stmt->execute([$newHash, $_SESSION['user_id']]);
       $success = 'パスワードを変更しました。';
     } 
     else {
