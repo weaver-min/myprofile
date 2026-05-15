@@ -6,7 +6,7 @@
  */
 /* - trim()でぜんごのくうはくをさくじょ
  - そんざいしないキーは空文字列に置き換える
- - 配信停止はチェックボックスなので、存在する場合は1、存在しない場合は0に変換する
+ - 配信停止は1だけを停止、その他は0に変換する
 */
 
 function normalizeCustomerInput(array $data): array
@@ -20,7 +20,7 @@ function normalizeCustomerInput(array $data): array
         'address1' => trim($data['address1'] ?? ''),
         'address2' => trim($data['address2'] ?? ''),
         'mail' => trim($data['mail'] ?? ''),
-        'stop' => isset($data['stop']) ? (int) $data['stop'] : 0,
+        'stop' => (isset($data['stop']) && (string) $data['stop'] === '1') ? 1 : 0,
         'note' => trim($data['note'] ?? ''),
     ];
 }

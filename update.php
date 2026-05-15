@@ -5,11 +5,9 @@ require 'customer-validation.php';
 /* - POSTされたデータを受け取る
  - customer_idを取得する
  - その他の顧客情報を正規化して配列にまとめる
- - stopはチェックボックスなので、issetで判定して1か0をセットする
 */
 $customerId = (int) ($_POST['customer_id'] ?? 0);
 $data = normalizeCustomerInput($_POST);
-$data['stop'] = isset($_POST['stop']) ? 1 : 0;
 if ($customerId === 0) {
     die('顧客コードが正しくありません。');
 }
