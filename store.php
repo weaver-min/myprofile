@@ -7,10 +7,7 @@ require 'customer-validation.php';
  - stopはチェックボックスなので、issetで判定して1か0をセットする
 */
 $data = normalizeCustomerInput($_POST);
-$data['stop'] = isset($_POST['stop']) ? 1 : 0;
-/* - 正規化されたデータを検証する
- - validateCustomerInput関数を呼び出して、入力エラーの配列を取得する
-*/
+$data['stop'] = (isset($_POST['stop']) && $_POST['stop'] === '1') ? 1 : 0;
 $errors = validateCustomerInput($data);
 /* - 入力エラーがない場合は、同じメールアドレスの顧客がすでに存在しないかをチェックする
  - 同じメールアドレスの顧客が存在する場合はエラーに追加する

@@ -289,7 +289,7 @@ if (!$customer) {
                 <div class="form-group">
                   <label class="form-label">配信停止</label>
                   <div class="form-check-group">
-                    <label><input type="checkbox" name="stop" <?= $old['stop'] ?? $customer['stop'] ? 'checked' : '' ?>>
+                    <label><input type="checkbox" name="stop" value="1" <?= $old['stop'] ?? $customer['stop'] ? 'checked' : '' ?>>
                       配信を停止する</label>
                   </div>
                 </div>
