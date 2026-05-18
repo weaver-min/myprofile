@@ -12,10 +12,11 @@ $errors = validateCustomerInput($data);
 // データが同じ場合は以下のコード
 if (!$errors && findDuplicateCustomer($pdo,  $data['mail'])) {
   $errors[] = 'メールアドレスの顧客がすでに登録されています。';
+  $fieldErrors[] = 'mail';
 }
-
 if ($errors) {
   $_SESSION['form_errors'] = $errors;
+  $_SESSION['field_errors'] = getFieldErrors($data); // 追加：赤枠表示用
   header("Location: customer-register.php?error=1");
   exit;
 }

@@ -8,6 +8,21 @@ require 'auth.php';
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MailDeli | 顧客情報検索</title>
 <link rel="stylesheet" href="css/modern.css">
+<style>
+  .alert-danger {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+    font-size: 13.5px;
+  }
+  .alert-danger svg { width: 18px; height: 18px; flex-shrink: 0; }
+</style>
 </head>
 <body>
 
@@ -106,9 +121,14 @@ require 'auth.php';
       </div>
     </div>
 
+    <div id="search-error" class="alert-danger" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+
+    </div>
+
     <div class="card">
       <div class="card-body">
-        <form method="get" action="customer-list.php">
+        <form id="search-form" method="get" action="customer-list.php">
           <div class="form-grid">
             <div class="form-full">
               <div class="form-group">
@@ -183,7 +203,38 @@ require 'auth.php';
   </div>
 </div>
 
+<script>
+document.getElementById('search-form').addEventListener('submit', function (ele) {
+  const form = this;
+  const errorBox = document.getElementById('search-error');
+  const errors = [];
+
+  if (form.elements['codeFrom'].value.trim() === '' && form.elements['codeTo'].value.trim() === '') {
+    errors.push('顧客コード（開始・終了のどちらか）を入力してください。');
+  }
+  if (form.elements['name'].value.trim() === '') {
+    errors.push('顧客名を入力してください。');
+  }
+  if (form.elements['sex'].value === '') {
+    errors.push('性別を選択してください。');
+  }
+  if (form.elements['group'].value === '') {
+    errors.push('グループを選択してください。');
+  }
+  if (form.elements['mail'].value.trim() === '') {
+    errors.push('メールアドレスを入力してください。');
+  }
+
+  if (errors.length > 0) {
+    ele.preventDefault();
+    errorBox.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div>' + errors.join('<br>') + '</div>';
+    errorBox.style.display = 'flex';
+    errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else {
+    errorBox.style.display = 'none';
+  }
+});
+</script>
+
 </body>
 </html>
-
-

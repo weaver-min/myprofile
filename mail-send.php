@@ -62,10 +62,10 @@ $timestamp = date('Ymd_His');
 foreach ($customers as $c) {
     // generate txt file: sendmail/YYYYMMDD_HHMMSS_顧客ID.txt
     $filename = $sendmailDir . '/' . $timestamp . '_' . $c['customer_id'] . '.txt';
-    $content  = "宛先: {$c['name']} <{$c['mail']}>\n";
-    $content .= "件名: {$title}\n";
-    $content .= "送信者: {$fromName} <{$fromEmail}>\n";
-    $content .= "送信日時: " . date('Y-m-d H:i:s') . "\n";
+    $content  = "To : {$c['name']} <{$c['mail']}>\n";
+    $content .= "From: {$fromName} <{$fromEmail}>\n";
+    $content .= "Subject: {$title}\n";
+    $content .= "Date: " . date('Y-m-d H:i:s') . "\n";
     $content .= "---\n";
     $content .= $body;
     file_put_contents($filename, $content);
@@ -74,7 +74,6 @@ foreach ($customers as $c) {
     $subject  = mb_encode_mimeheader($title, 'UTF-8', 'B');
     $headers  = "From: {$fromName} <{$fromEmail}>\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    //mail($c['mail'], $subject, $body, $headers);
 }
 // save to mail_history
 $searchCondition = 'IDs: ' . implode(',', $send);

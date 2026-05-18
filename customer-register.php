@@ -7,7 +7,16 @@ require 'auth.php';
  */
 $old = $_SESSION['form_data'] ?? [];
 $formErrors = $_SESSION['form_errors'] ?? [];
-unset($_SESSION['form_errors']);
+$fieldErrors = $_SESSION['field_errors'] ?? [];
+unset($_SESSION['form_errors'], $_SESSION['field_errors']);
+
+function hasFieldError(string $field, array $fieldErrors): bool {
+  return in_array($field, $fieldErrors, true);
+}
+function errCls(string $field, array $fieldErrors): string {
+  return hasFieldError($field, $fieldErrors) ? ' is-invalid' : '';
+}
+
 // クリア処理
 if (isset($_GET['clear'])) {
   unset($_SESSION['form_data']);
@@ -27,6 +36,20 @@ if (isset($_GET['clear'])) {
     .required::after {
       content: ' *';
       color: red;
+    }
+    .form-control.is-invalid,
+    .form-control.is-invalid:focus,
+    .form-select.is-invalid,
+    .form-select.is-invalid:focus {
+      border-color: #dc3545 !important;
+      box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15) !important;
+    }
+    .form-radio-group.is-invalid label {
+      color: #dc3545;
+    }
+    .form-radio-group.is-invalid input[type="radio"] {
+      outline: 2px solid #dc3545;
+      outline-offset: 1px;
     }
   </style>
 </head>
@@ -201,17 +224,17 @@ if (isset($_GET['clear'])) {
               <div>
                 <div class="form-group">
                   <label class="form-label required">顧客名</label>
-                  <input type="text" name="name" class="form-control" placeholder="例：田中 太郎" required
+                  <input type="text" name="name" class="form-control<?= errCls('name', $fieldErrors) ?>" placeholder="例：田中 太郎"
                     value="<?= htmlspecialchars($old['name'] ?? '') ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label required">フリガナ</label>
-                  <input type="text" name="kana" class="form-control" placeholder="例：タナカ タロウ" pattern="[ぁ-んァ-ヴヶー\s]+"
-                    title="ひらがな・カタカナで入力してください" required value="<?= htmlspecialchars($old['kana'] ?? '') ?>">
+                  <input type="text" name="kana" class="form-control<?= errCls('kana', $fieldErrors) ?>" placeholder="例：タナカ タロウ"
+                    value="<?= htmlspecialchars($old['kana'] ?? '') ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label required">性別</label>
-                  <div class="form-radio-group">
+                  <div class="form-radio-group<?= hasFieldError('sex', $fieldErrors) ? ' is-invalid' : '' ?>">
                     <label><input type="radio" name="sex" value="男" <?= ($old['sex'] ?? '') === '男' ? 'checked' : '' ?>>
                       男</label>
                     <label><input type="radio" name="sex" value="女" <?= ($old['sex'] ?? '') === '女' ? 'checked' : '' ?>>
@@ -220,7 +243,7 @@ if (isset($_GET['clear'])) {
                 </div>
                 <div class="form-group">
                   <label class="form-label required">グループ</label>
-                  <select name="group" class="form-control form-select" style="width:120px;">
+                  <select name="group" class="form-control form-select<?= errCls('group', $fieldErrors) ?>" style="width:120px;">
                     <?php foreach (['A', 'B', 'C', 'D'] as $g): ?>
                       <option value="<?= $g ?>" <?= ($old['group'] ?? '') === $g ? 'selected' : '' ?>>
                         <?= $g ?>
@@ -249,9 +272,7 @@ if (isset($_GET['clear'])) {
                 </div>
                 <div class="form-group">
                   <label class="form-label required">メールアドレス</label>
-                  <input type="email" name="mail" class="form-control" placeholder="example@domain.com"
-                    pattern="[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}"
-                    title="example@domain.co.jp のような正しいメールアドレスを入力してください" required
+                  <input type="email" name="mail" class="form-control<?= errCls('mail', $fieldErrors) ?>" placeholder="example@domain.com"
                     value="<?= htmlspecialchars($old['mail'] ?? '') ?>">
                 </div>
                 <div class="form-group">

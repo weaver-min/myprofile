@@ -127,3 +127,34 @@ function findDuplicateCustomer(PDO $pdo, string $mail, int $excludeId = 0): bool
 
     return (int)$stmt->fetchColumn() > 0;
 }
+
+/**
+ * エラーのあるフィールド名の配列を返す
+ * customer-register.php の赤枠表示に使用する
+ * @param array $data 正規化された入力データ
+ * @return array エラーフィールド名の配列
+ */
+function getFieldErrors(array $data): array
+{
+    $fieldErrors = [];
+
+    if ($data['name'] === '') {
+        $fieldErrors[] = 'name';
+    }
+
+    if ($data['kana'] === '' || !preg_match('/\A[\p{Hiragana}\p{Katakana}\x{30FC}\x{3000}\s]+\z/u', $data['kana'])) {
+        $fieldErrors[] = 'kana';
+    }
+
+    if ($data['sex'] === '') {
+        $fieldErrors[] = 'sex';
+    }
+    if (empty($data['group'])) {
+    $fieldErrors[] = 'group';
+    }
+    if ($data['mail'] === '' || !isValidCustomerEmail($data['mail'])) {
+        $fieldErrors[] = 'mail';
+    }
+
+    return $fieldErrors;
+}

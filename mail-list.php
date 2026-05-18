@@ -127,8 +127,11 @@ if ($mail !== '') {
   $countSql .= " AND mail LIKE ?";
   $countParams[] = "%$mail%";
 }
-
-
+if (!empty($groups)) {
+  $placeholders = implode(',', array_fill(0, count($groups), '?'));
+  $countSql .= " AND `group` IN ($placeholders)";
+  $countParams = array_merge($countParams, $groups);
+}
 /* ---------------------------
    EXECUTE COUNT
 ---------------------------- */
