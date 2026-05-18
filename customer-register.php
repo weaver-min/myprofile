@@ -10,6 +10,12 @@ $formErrors = $_SESSION['form_errors'] ?? [];
 $fieldErrors = $_SESSION['field_errors'] ?? [];
 unset($_SESSION['form_errors'], $_SESSION['field_errors']);
 
+/*
+   フォームのエラー表示用ヘルパー関数。
+
+hasFieldError は指定フィールドのエラー有無を判定し、errCls はエラー時に 'is-invalid' クラスを返す。
+
+*/
 function hasFieldError(string $field, array $fieldErrors): bool {
   return in_array($field, $fieldErrors, true);
 }
@@ -283,8 +289,6 @@ if (isset($_GET['clear'])) {
                   </div>
                 </div>
               </div>
-
-              <!-- Full width -->
               <div class="form-full">
                 <div class="form-group" style="margin-bottom:0;">
                   <label class="form-label">備考</label>

@@ -5,7 +5,6 @@ require 'db.php';
 $send = $_POST['send'] ?? [];
 $title = $_POST['title'] ?? '';
 $body = $_POST['body'] ?? '';
-
 if (empty($send) || $title === '' || $body === '') {
   header("Location: mail-work.php");
   exit;

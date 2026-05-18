@@ -79,12 +79,14 @@ if ($stop === '1') {
 */
 $countSql = "SELECT COUNT(*) FROM customers WHERE 1=1";
 $countParams = [];
-
+/*
+   フィルタ条件をCOUNTクエリにも適用します。
+   これにより、ユーザーが指定した条件に一致する顧客の総数が正確にカウントされます。
+*/
 if ($codeFrom !== '') {
   $countSql .= " AND customer_id >= ?";
   $countParams[] = (int) $codeFrom;
 }
-
 if ($codeTo !== '') {
   $countSql .= " AND customer_id <= ?";
   $countParams[] = (int) $codeTo;
@@ -133,6 +135,7 @@ if ($stop === '1') {
    EXECUTE COUNT
 ---------------------------- */
 $countStmt = $pdo->prepare($countSql);
+// COUNTクエリにパラメータをバインドして実行し、検索条件に一致する顧客の総件数を取得する。
 
 foreach ($countParams as $i => $v) {
   $type = is_int($v) ? PDO::PARAM_INT : PDO::PARAM_STR;

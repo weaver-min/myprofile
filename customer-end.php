@@ -1,6 +1,10 @@
 <?php
 require 'auth.php';
-
+require 'db.php';
+/* customer-confirm.php からPOSTデータを受け取り、顧客情報（名前・メールアドレス・電話番号）を取得する。
+ 取得したデータをデータベースに保存し、成功時はPRGパターンで customer-end.php にリダイレクトして完了画面を表示する。
+ 失敗時はエラーメッセージをセッションに保存して customer-confirm.php にリダイレクトする。
+ エラーメッセージは画面上部に赤いアラートで表示し、対象項目は赤枠表示する。*/
 if (!isset($_GET['success'])) {
     header("Location: customer-register.php");
     exit;
