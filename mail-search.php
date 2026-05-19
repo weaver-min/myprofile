@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'auth.php';
 require 'customer-validation.php';
 
