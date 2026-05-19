@@ -309,14 +309,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               </div>
 
               <div class="form-full">
+                <!-- /* - 顧客グループは複数選択可能なチェックボックスとする
+                   - グループはA、B、C、Dの4つとする*/ -->
                 <div class="form-group" style="margin-bottom:0;">
+                  
                   <label class="form-label">顧客グループ</label>
                   <div class="form-check-group">
-                    <?php foreach (['A', 'B', 'C', 'D'] as $g): ?>
+                    <?php foreach (['A', 'B', 'C', 'D'] as $gp): ?>
                     <label>
-                      <input type="checkbox" name="group[]" value="<?= $g ?>"
-                             <?= in_array($g, $values['group'], true) ? 'checked' : '' ?>>
-                      <?= $g ?>
+                      <input type="checkbox" name="group[]" value="<?= $gp ?>"
+                             <?= in_array($gp, $values['group'], true) ? 'checked' : '' ?>>
+                      <?= $gp ?>
                     </label>
                     <?php endforeach; ?>
                   </div>

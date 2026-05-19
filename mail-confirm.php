@@ -231,8 +231,8 @@ $customers = $stmt->fetchAll();
           <div class="form-group" style="margin-bottom:0;">
             <div class="form-label">メール送信先（<?= count($customers) ?>件）</div>
             <div class="info-box" style="line-height:2;color:var(--text-muted);">
-              <?php foreach ($customers as $c): ?>
-                <?= htmlspecialchars($c['customer_id']) ?>：<?= htmlspecialchars($c['name']) ?><br>
+              <?php foreach ($customers as $customer): ?>
+                <?= htmlspecialchars($customer['customer_id']) ?>：<?= htmlspecialchars($customer['name']) ?><br>
               <?php endforeach; ?>
             </div>
           </div>

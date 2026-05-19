@@ -14,8 +14,6 @@ $groupB = $pdo->query("SELECT COUNT(*) FROM customers WHERE `group` = 'B'")->fet
 $groupC = $pdo->query("SELECT COUNT(*) FROM customers WHERE `group` = 'C'")->fetchColumn();
 $groupD = $pdo->query("SELECT COUNT(*) FROM customers WHERE `group` = 'D'")->fetchColumn();
 $stopped = $pdo->query("SELECT COUNT(*) FROM customers WHERE stop = 1")->fetchColumn();
-
-// add these after group counts
 /* - メール送信設定とメール送信履歴をデータベースから取得する
  - mail_senderテーブルから送信者名と送信アドレスを取得するクエリを実行する
  - mail_historyテーブルから最新の送信履歴を取得するクエリを実行する

@@ -4,10 +4,7 @@ require 'db.php';
 require 'customer-validation.php';
 
 $data = normalizeCustomerInput($_POST);
-
-/*もし　確認ページになってデータを消したい場合は　unset($_SESSION['form_data']);*/
 $_SESSION['form_data'] = $data;
-
 $errors = validateCustomerInput($data);
 // データが同じ場合は以下のコード
 if (!$errors && findDuplicateCustomer($pdo,  $data['mail'])) {

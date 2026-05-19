@@ -5,7 +5,6 @@ require 'db.php';
 $title = $_POST['title'] ?? '';
 $body = $_POST['body'] ?? '';
 $send = $_POST['send'] ?? [];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($send)) {
         header("Location: mail-list.php");
