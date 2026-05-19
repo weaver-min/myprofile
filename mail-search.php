@@ -17,8 +17,6 @@ $values = [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // group[] を先に取り出してから normalizeCustomerInput に渡す
-    // そのまま渡すと trim() が配列を受け取ってエラーになるため
     $groupValues = isset($_POST['group']) && is_array($_POST['group'])
                    ? $_POST['group']
                    : [];
@@ -36,6 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($values['name'] === '') {
         $errors[] = '顧客名を入力してください。';
     }
+    if ($values['kana'] !== '' && !preg_match('/\A[\p{Hiragana}\p{Katakana}\x{30FC}\x{3000}\s]+\z/u', $values['kana'])) {
+        $errors[] = 'フリガナは日本語のひらがな・カタカナで入力してください。';
+    }
     if ($values['sex'] === '') {
         $errors[] = '性別を選択してください。';
     }
@@ -46,11 +47,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'メールアドレスを入力してください。';
     }
 
+    $_SESSION['form_errors'] = $errors;
+    $_SESSION['form_values'] = $values;
+
     if (empty($errors)) {
         header('Location: mail-list.php?' . http_build_query($values));
-        exit;
+    } else {
+        header('Location: mail-search.php');
     }
+    exit;
 }
+
+// on GET: restore from session if available
+$errors = $_SESSION['form_errors'] ?? [];
+$values = $_SESSION['form_values'] ?? $values;
+if (!isset($values['group']) || !is_array($values['group'])) {
+    $values['group'] = [];
+}
+unset($_SESSION['form_errors'], $_SESSION['form_values']);
 ?>
 <!doctype html>
 <html lang="ja">

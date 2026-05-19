@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'auth.php';
 require 'customer-validation.php';
 
@@ -28,6 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($values['name'] === '') {
         $errors[] = '顧客名を入力してください。';
     }
+    if ($values['kana'] !== '' && !preg_match('/\A[\p{Hiragana}\p{Katakana}\x{30FC}\x{3000}\s]+\z/u', $values['kana'])) {
+        $errors[] = 'フリガナは日本語のひらがな・カタカナで入力してください。';
+    }
     if ($values['sex'] === '') {
         $errors[] = '性別を選択してください。';
     }
@@ -38,11 +42,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'メールアドレスを入力してください。';
     }
 
+    $_SESSION['form_errors'] = $errors;
+    $_SESSION['form_values'] = $values;
+
     if (empty($errors)) {
         header('Location: customer-list.php?' . http_build_query($values));
-        exit;
+    } else {
+        header('Location: customer-search.php');
     }
+    exit;
 }
+
+// on GET: restore from session if available
+$errors = $_SESSION['form_errors'] ?? [];
+$values = $_SESSION['form_values'] ?? $values;
+unset($_SESSION['form_errors'], $_SESSION['form_values']);
 ?>
 <!doctype html>
 <html lang="ja">
