@@ -11,7 +11,7 @@ if (!empty($_SESSION['user_id'])) {
 }
 
 $error = '';
-
+/* - POSTリクエストでない場合は、単純にログインフォームを表示するだけでOK */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   require 'db.php';
 
@@ -25,13 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->execute([$loginId]);
     $user = $stmt->fetch();
-
+/* - パスワードはハッシュ化されているため、password_verify関数を使って検証する*/
    if ($user && password_verify($loginPass, $user['password'])) {
       $_SESSION['user_id'] = $user['id'];
       $_SESSION['login_id'] = $user['username'];
       header("Location: top.php");
       exit;
-    } else {
+    } 
+    else {
       $error = 'ユーザーIDまたはパスワードが正しくありません。';
     }
   }

@@ -98,13 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?> 
         <form method="post" action="mail-template.php">
-          <!-- /* - 3件分のテンプレートをループで表示する
-           - 各テンプレートは、テンプレート名の入力欄とテンプレート本文のテキストエリアからなる
-           - 最後のテンプレートの下には区切り線を表示しない
-           - フォームの下部には、「全件削除」ボタンと「すべて保存」ボタンを配置する
-           - 「全件削除」ボタンは、クリックすると全てのテンプレートを削除するtemplate_nameとtemplate_bodyを空にする
-           - 「すべて保存」ボタンは、クリックすると現在の入力内容を保存する（更新する）
-           - ボタンをクリックしたときの確認ダイアログを追加する（例: 「全件削除しますか？」、「保存しますか？」など） */   -->
           <?php foreach ($templates as $index => $template): ?>
           <?php if ($index > 0): ?><hr class="divider"><?php endif; ?>
           <div class="tmpl-section" <?= $index === count($templates)-1 ? 'style="margin-bottom:0;"' : '' ?>>

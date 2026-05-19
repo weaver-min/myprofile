@@ -73,12 +73,9 @@ if ($mail !== '') {
   $params[] = '%' . $mail . '%';
 }
 
-// group checkboxes - multiple values
-/* - グループは複数選択可能なので、配列で受け取る
- - 受け取ったグループの値がA、B、C、Dのいずれかであることを確認する
- - 不正な値が含まれている場合は、その値を除外する
- - 有効なグループが1つ以上ある場合は、SQLクエリにIN句を追加してフィルタリングする
-*/
+/* - グループの条件は、IN句を使ってまとめて指定する
+ - 例えば、グループAとCが選択されている場合は、AND `group` IN ('A', 'C')のような条件になる
+ - プレースホルダを複数用意して、選択されたグループの数だけバインドする */
 if (!empty($groups)) {
   $placeholders = implode(',', array_fill(0, count($groups), '?'));
   $sql .= " AND `group` IN ($placeholders)";

@@ -40,7 +40,10 @@ $sql = "UPDATE customers SET
     zip = ?, address1 = ?, address2 = ?,
     mail = ?, stop = ?, note = ?
     WHERE customer_id = ?";
-
+/* - UPDATE文を実行して、顧客情報を更新する
+ - プレースホルダを使用して、SQLインジェクションを防止する
+ - データベースに保存した後は、customer-detail.phpにリダイレクトして、更新完了のメッセージを表示する
+*/
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
     $data['name'],

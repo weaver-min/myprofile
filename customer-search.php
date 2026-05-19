@@ -207,7 +207,9 @@ document.getElementById('search-form').addEventListener('submit', function (ele)
   const form = this;
   const errorBox = document.getElementById('search-error');
   const errors = [];
-
+/* - 顧客コードは開始か終了のどちらかが入力されていればOKとする
+   - それ以外の必須項目は空でないことをチェックする
+   - エラーがあればフォームの送信を止めて、エラーメッセージを表示する */
   if (form.elements['codeFrom'].value.trim() === '' && form.elements['codeTo'].value.trim() === '') {
     errors.push('顧客コード（開始・終了のどちらか）を入力してください。');
   }

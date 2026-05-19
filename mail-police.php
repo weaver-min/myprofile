@@ -1,27 +1,28 @@
 <?php
 require 'auth.php';
 require 'db.php';
-/* - mail-work.phpからPOSTされたデータを受け取る
- - 送信先の顧客IDの配列、メールタイトル、メール本文を取得する
- - 送信先が空、タイトルが空、本文が空の場合はmail-work.phpにリダイレクトする
- - 正常な場合はセッションに保存して確認画面へリダイレクトする
- - 確認画面ではセッションからデータを取得して表示する
- - 確認画面で「送信する」ボタンが押されたらmail-send.phpにPOSTして実際の送信処理を行う
-*/
 $error = '';
 $success = '';
 
 $settings = $pdo->query("SELECT * FROM mail_sender LIMIT 1")->fetch();
 
+/* - POSTリクエストの場合は、送信者名と送信アドレスを受け取って保存する
+   - 送信者名と送信アドレスはどちらも必須項目とする
+   - 送信アドレスはメールアドレスの形式であることを確認する
+   - エラーがあれば$errorにメッセージをセットして画面に表示する
+   - 成功した場合は$successにメッセージをセットして画面に表示する
+   - どちらの場合も、保存後は最新の設定を$settingsに再取得して画面に反映させる */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $senderName = $_POST['sender_name'] ?? '';
   $senderEmail = $_POST['sender_email'] ?? '';
 
   if ($senderName === '' || $senderEmail === '') {
     $error = '送信者名と送信アドレスを入力してください。';
-  } elseif (!filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
+  } 
+  elseif (!filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
     $error = '正しいメールアドレスを入力してください。';
-  } else {
+  }
+   else {
     $stmt = $pdo->prepare("UPDATE mail_sender SET sender_name=?, sender_email=? WHERE id=1");
     $stmt->execute([$senderName, $senderEmail]);
     $success = '送信者設定を保存しました。';

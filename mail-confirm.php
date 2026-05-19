@@ -5,6 +5,9 @@ require 'db.php';
 $send = $_POST['send'] ?? [];
 $title = $_POST['title'] ?? '';
 $body = $_POST['body'] ?? '';
+/* - 送信先が選択されていない、またはタイトル・本文が空の場合は前の画面にリダイレクトする
+   - 送信先は複数選択される可能性があるため、$sendは配列で受け取る
+   - タイトルと本文は単純なテキスト入力とする */
 if (empty($send) || $title === '' || $body === '') {
   header("Location: mail-work.php");
   exit;
