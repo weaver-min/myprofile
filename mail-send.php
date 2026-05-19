@@ -59,10 +59,10 @@ if (!is_dir($sendmailDir)) {
 $timestamp = date('Ymd_His');
 
 // send to each customer and generate txt file
-foreach ($customers as $c) {
+foreach ($customers as $customer) {
     // generate txt file: sendmail/YYYYMMDD_HHMMSS_顧客ID.txt
-    $filename = $sendmailDir . '/' . $timestamp . '_' . $c['customer_id'] . '.txt';
-    $content  = "To : {$c['name']} <{$c['mail']}>\n";
+    $filename = $sendmailDir . '/' . $timestamp . '_' . $customer['customer_id'] . '.txt';
+    $content  = "To : {$customer['name']} <{$customer['mail']}>\n";
     $content .= "From: {$fromName} <{$fromEmail}>\n";
     $content .= "Subject: {$title}\n";
     $content .= "Date: " . date('Y-m-d H:i:s') . "\n";

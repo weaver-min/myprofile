@@ -202,12 +202,6 @@ require 'auth.php';
     </div>
   </div>
 </div>
-/*フォーム送信時に各入力値をチェックし、エラーがある場合は送信を中止してエラーメッセージを表示する。
-
-エラーメッセージは画面上部の赤いアラートボックス内に表示し、対象項目には is-invalid クラスを追加して赤枠表示する。
-
-エラーがない場合は、エラーメッセージを非表示にする。
-*/
 <script>
 document.getElementById('search-form').addEventListener('submit', function (ele) {
   const form = this;

@@ -5,7 +5,7 @@ require 'customer-validation.php';
 
 $data = normalizeCustomerInput($_POST);
 
-//もし　確認ページになってデータを消したい場合は　unset($_SESSION['form_data']);
+/*もし　確認ページになってデータを消したい場合は　unset($_SESSION['form_data']);*/
 $_SESSION['form_data'] = $data;
 
 $errors = validateCustomerInput($data);
@@ -14,9 +14,9 @@ if (!$errors && findDuplicateCustomer($pdo,  $data['mail'])) {
   $errors[] = 'メールアドレスの顧客がすでに登録されています。';
   $fieldErrors[] = 'mail';
 }
-// バリデーションエラー時は、エラー内容をセッションに保存して customer-register.php にリダイレクトする。
+/* バリデーションエラー時は、エラー内容をセッションに保存して customer-register.php にリダイレクトする。
 
-// エラーメッセージは画面上部に赤いアラートで表示し、対象項目は赤枠表示する。
+ エラーメッセージは画面上部に赤いアラートで表示し、対象項目は赤枠表示する。*/
 
 if ($errors) {
   $_SESSION['form_errors'] = $errors;

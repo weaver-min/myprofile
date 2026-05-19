@@ -161,6 +161,7 @@ $templates = $pdo->query("SELECT * FROM mail_templates ORDER BY id ASC")->fetchA
                 <?= htmlspecialchars($body) ?></textarea>
 
                 <div class="form-footer">
+                  <button type="reset" class="btn btn-ghost">クリア</button>
                   <a href="mail-template.php" class="btn btn-ghost">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                       stroke-linejoin="round">
