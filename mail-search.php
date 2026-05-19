@@ -1,5 +1,56 @@
 <?php
 require 'auth.php';
+require 'customer-validation.php';
+
+$errors = [];
+$values = [
+    'codeFrom' => '',
+    'codeTo'   => '',
+    'name'     => '',
+    'kana'     => '',
+    'sex'      => '',
+    'zip'      => '',
+    'address1' => '',
+    'mail'     => '',
+    'group'    => [],
+];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // group[] を先に取り出してから normalizeCustomerInput に渡す
+    // そのまま渡すと trim() が配列を受け取ってエラーになるため
+    $groupValues = isset($_POST['group']) && is_array($_POST['group'])
+                   ? $_POST['group']
+                   : [];
+    unset($_POST['group']);
+
+    $normalized = normalizeCustomerInput($_POST);
+    $normalized['codeFrom'] = trim($_POST['codeFrom'] ?? '');
+    $normalized['codeTo']   = trim($_POST['codeTo']   ?? '');
+    $normalized['group']    = $groupValues;
+    $values = $normalized;
+
+    if ($values['codeFrom'] === '' && $values['codeTo'] === '') {
+        $errors[] = '顧客コード（開始・終了のどちらか）を入力してください。';
+    }
+    if ($values['name'] === '') {
+        $errors[] = '顧客名を入力してください。';
+    }
+    if ($values['sex'] === '') {
+        $errors[] = '性別を選択してください。';
+    }
+    if (empty($values['group'])) {
+        $errors[] = 'グループを選択してください。';
+    }
+    if ($values['mail'] === '') {
+        $errors[] = 'メールアドレスを入力してください。';
+    }
+
+    if (empty($errors)) {
+        header('Location: mail-list.php?' . http_build_query($values));
+        exit;
+    }
+}
 ?>
 <!doctype html>
 <html lang="ja">
@@ -22,7 +73,6 @@ require 'auth.php';
       margin-bottom: 20px;
       font-size: 13.5px;
     }
-
     .alert-danger svg {
       width: 18px;
       height: 18px;
@@ -142,8 +192,7 @@ require 'auth.php';
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3" />
-            <path
-              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
           </svg>
           システム設定
         </a>
@@ -186,69 +235,90 @@ require 'auth.php';
           <div class="page-subtitle">メール送信先の顧客を絞り込みます</div>
         </div>
       </div>
-      <div id="search-error" class="alert-danger" style="display:none;">
+
+      <?php if (!empty($errors)): ?>
+      <div class="alert-danger">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
           stroke-linejoin="round">
           <circle cx="12" cy="12" r="10" />
           <line x1="12" y1="8" x2="12" y2="12" />
           <line x1="12" y1="16" x2="12.01" y2="16" />
         </svg>
-
+        <div><?= implode('<br>', array_map('htmlspecialchars', $errors)) ?></div>
       </div>
+      <?php endif; ?>
+
       <div class="card">
         <div class="card-body">
-          <form id="search-form" method="get" action="mail-list.php">
+          <form id="search-form" method="post" action="mail-search.php">
             <div class="form-grid">
               <div class="form-full">
                 <div class="form-group">
                   <label class="form-label">顧客コード</label>
                   <div class="form-code-range">
-                    <input type="text" name="codeFrom" class="form-control" placeholder="開始コード">
+                    <input type="text" name="codeFrom" class="form-control"
+                           value="<?= htmlspecialchars($values['codeFrom']) ?>"
+                           placeholder="開始コード">
                     <span class="form-sep">〜</span>
-                    <input type="text" name="codeTo" class="form-control" placeholder="終了コード">
+                    <input type="text" name="codeTo" class="form-control"
+                           value="<?= htmlspecialchars($values['codeTo']) ?>"
+                           placeholder="終了コード">
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="form-label">顧客名</label>
-                <input type="text" name="name" class="form-control" placeholder="顧客名で検索">
+                <input type="text" name="name" class="form-control"
+                       value="<?= htmlspecialchars($values['name']) ?>"
+                       placeholder="顧客名で検索">
               </div>
               <div class="form-group">
                 <label class="form-label">フリガナ</label>
-                <input type="text" name="kana" class="form-control" placeholder="フリガナで検索">
+                <input type="text" name="kana" class="form-control"
+                       value="<?= htmlspecialchars($values['kana']) ?>"
+                       placeholder="フリガナで検索">
               </div>
 
               <div class="form-group">
                 <label class="form-label">性別</label>
                 <select name="sex" class="form-control form-select" style="max-width:160px;">
                   <option value="">指定なし</option>
-                  <option value="男">男</option>
-                  <option value="女">女</option>
+                  <option value="男" <?= $values['sex'] === '男' ? 'selected' : '' ?>>男</option>
+                  <option value="女" <?= $values['sex'] === '女' ? 'selected' : '' ?>>女</option>
                 </select>
               </div>
               <div class="form-group">
                 <label class="form-label">郵便番号</label>
-                <input type="text" name="zip" class="form-control" placeholder="例：100-0001" style="max-width:180px;">
+                <input type="text" name="zip" class="form-control"
+                       value="<?= htmlspecialchars($values['zip']) ?>"
+                       placeholder="例：100-0001" style="max-width:180px;">
               </div>
               <div class="form-group">
                 <label class="form-label">住所1</label>
-                <input type="text" name="address1" class="form-control" placeholder="都道府県・市区町村">
+                <input type="text" name="address1" class="form-control"
+                       value="<?= htmlspecialchars($values['address1']) ?>"
+                       placeholder="都道府県・市区町村">
               </div>
 
               <div class="form-group">
                 <label class="form-label">メールアドレス</label>
-                <input type="text" name="mail" class="form-control" placeholder="example@domain.com">
+                <input type="text" name="mail" class="form-control"
+                       value="<?= htmlspecialchars($values['mail']) ?>"
+                       placeholder="example@domain.com">
               </div>
 
               <div class="form-full">
                 <div class="form-group" style="margin-bottom:0;">
                   <label class="form-label">顧客グループ</label>
                   <div class="form-check-group">
-                    <label><input type="checkbox" name="group[]" value="A"> A</label>
-                    <label><input type="checkbox" name="group[]" value="B"> B</label>
-                    <label><input type="checkbox" name="group[]" value="C"> C</label>
-                    <label><input type="checkbox" name="group[]" value="D"> D</label>
+                    <?php foreach (['A', 'B', 'C', 'D'] as $g): ?>
+                    <label>
+                      <input type="checkbox" name="group[]" value="<?= $g ?>"
+                             <?= in_array($g, $values['group'], true) ? 'checked' : '' ?>>
+                      <?= $g ?>
+                    </label>
+                    <?php endforeach; ?>
                   </div>
                 </div>
               </div>
@@ -270,40 +340,6 @@ require 'auth.php';
       </div>
     </div>
   </div>
-  <script>
-    document.getElementById('search-form').addEventListener('submit', function (ele) {
-      const form = this;
-      const errorBox = document.getElementById('search-error');
-      const errors = [];
 
-      if (form.elements['codeFrom'].value.trim() === '' && form.elements['codeTo'].value.trim() === '') {
-        errors.push('顧客コード（開始・終了のどちらか）を入力してください。');
-      }
-      if (form.elements['name'].value.trim() === '') {
-        errors.push('顧客名を入力してください。');
-      }
-      if (form.elements['sex'].value === '') {
-        errors.push('性別を選択してください。');
-      }
-      const groups = document.querySelectorAll('input[name="group[]"]:checked');
-
-      if (groups.length === 0) {
-        errors.push('グループを選択してください。');
-      }
-      if (form.elements['mail'].value.trim() === '') {
-        errors.push('メールアドレスを入力してください。');
-      }
-
-      if (errors.length > 0) {
-        ele.preventDefault();
-        errorBox.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div>' + errors.join('<br>') + '</div>';
-        errorBox.style.display = 'flex';
-        errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        errorBox.style.display = 'none';
-      }
-    });
-  </script>
 </body>
-
 </html>

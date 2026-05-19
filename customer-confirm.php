@@ -14,8 +14,7 @@ if (!$errors && findDuplicateCustomer($pdo,  $data['mail'])) {
   $errors[] = 'メールアドレスの顧客がすでに登録されています。';
   $fieldErrors[] = 'mail';
 }
-/* バリデーションエラー時は、エラー内容をセッションに保存して customer-register.php にリダイレクトする。
-
+/* 
  エラーメッセージは画面上部に赤いアラートで表示し、対象項目は赤枠表示する。*/
 
 if ($errors) {

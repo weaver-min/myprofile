@@ -19,6 +19,9 @@ hasFieldError は指定フィールドのエラー有無を判定し、errCls �
 function hasFieldError(string $field, array $fieldErrors): bool {
   return in_array($field, $fieldErrors, true);
 }
+/*
+   フォームのエラー表示用ヘルパー関数
+  */
 function errCls(string $field, array $fieldErrors): string {
   return hasFieldError($field, $fieldErrors) ? ' is-invalid' : '';
 }
