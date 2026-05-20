@@ -159,9 +159,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               style="background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:13px;">
               <?= htmlspecialchars($error) ?>
             </div>
-            /* - エラーメッセージがある場合は赤い背景のボックスで表示する
-            - 成功メッセージがある場合は緑の背景のボックスで表示する
-            - どちらもない場合は何も表示しない */
           <?php endif; ?>
           <?php if ($success): ?>
             <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
