@@ -1,7 +1,6 @@
 <?php
 session_start();
 require 'auth.php';
-require 'customer-validation.php';
 
 $errors = [];
 $values = [
@@ -17,35 +16,28 @@ $values = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+    // Flexible search: collect all input without strict validation
     $groupValues = isset($_POST['group']) && is_array($_POST['group'])
                    ? $_POST['group']
                    : [];
-    unset($_POST['group']);
+    
+    $values = [
+        'codeFrom' => trim($_POST['codeFrom'] ?? ''),
+        'codeTo'   => trim($_POST['codeTo'] ?? ''),
+        'name'     => trim($_POST['name'] ?? ''),
+        'kana'     => trim($_POST['kana'] ?? ''),
+        'sex'      => trim($_POST['sex'] ?? ''),
+        'zip'      => trim($_POST['zip'] ?? ''),
+        'address1' => trim($_POST['address1'] ?? ''),
+        'mail'     => trim($_POST['mail'] ?? ''),
+        'group'    => $groupValues,
+    ];
 
-    $normalized = normalizeCustomerInput($_POST);
-    $normalized['codeFrom'] = trim($_POST['codeFrom'] ?? '');
-    $normalized['codeTo']   = trim($_POST['codeTo']   ?? '');
-    $normalized['group']    = $groupValues;
-    $values = $normalized;
-
-    if ($values['codeFrom'] === '' && $values['codeTo'] === '') {
-        $errors[] = '顧客コード（開始・終了のどちらか）を入力してください。';
-    }
-    if ($values['name'] === '') {
-        $errors[] = '顧客名を入力してください。';
-    }
-    if ($values['kana'] !== '' && !preg_match('/\A[\p{Hiragana}\p{Katakana}\x{30FC}\x{3000}\s]+\z/u', $values['kana'])) {
-        $errors[] = 'フリガナは日本語のひらがな・カタカナで入力してください。';
-    }
-    if ($values['sex'] === '') {
-        $errors[] = '性別を選択してください。';
-    }
-    if (empty($values['group'])) {
-        $errors[] = 'グループを選択してください。';
-    }
-    if ($values['mail'] === '') {
-        $errors[] = 'メールアドレスを入力してください。';
+    // At least one field must be filled to search
+    if ($values['codeFrom'] === '' && $values['codeTo'] === '' && $values['name'] === '' && 
+        $values['kana'] === '' && $values['sex'] === '' && $values['zip'] === '' && 
+        $values['address1'] === '' && $values['mail'] === '' && empty($values['group'])) {
+        $errors[] = 'すくなくとも1つの検索条件を入力してください。';
     }
 
     $_SESSION['form_errors'] = $errors;

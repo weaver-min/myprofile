@@ -41,11 +41,11 @@ if ($codeTo !== '') {
 }
 if ($name !== '') {
   $sql .= " AND name LIKE ?";
-  $params[] = "%$name%";
+  $params[] = '%' . $name . '%';
 }
 if ($kana !== '') {
   $sql .= " AND kana LIKE ?";
-  $params[] = "%$kana%";
+  $params[] = '%' . $kana . '%';
 }
 if ($sex !== '') {
   $sql .= " AND sex = ?";
@@ -57,15 +57,15 @@ if ($group !== '') {
 }
 if ($zip !== '') {
   $sql .= " AND zip LIKE ?";
-  $params[] = "%$zip%";
+  $params[] = '%' . $zip . '%';
 }
 if ($address1 !== '') {
   $sql .= " AND address1 LIKE ?";
-  $params[] = "%$address1%";
+  $params[] = '%' . $address1 . '%';
 }
 if ($mail !== '') {
   $sql .= " AND mail LIKE ?";
-  $params[] = "%$mail%";
+  $params[] = '%' . $mail . '%';
 }
 if ($stop === '1') {
   $sql .= " AND stop = 1";
@@ -94,12 +94,12 @@ if ($codeTo !== '') {
 
 if ($name !== '') {
   $countSql .= " AND name LIKE ?";
-  $countParams[] = "%$name%";
+  $countParams[] = '%' . $name . '%';
 }
 
 if ($kana !== '') {
   $countSql .= " AND kana LIKE ?";
-  $countParams[] = "%$kana%";
+  $countParams[] = '%' . $kana . '%';
 }
 
 if ($sex !== '') {
@@ -114,17 +114,17 @@ if ($group !== '') {
 
 if ($zip !== '') {
   $countSql .= " AND zip LIKE ?";
-  $countParams[] = "%$zip%";
+  $countParams[] = '%' . $zip . '%';
 }
 
 if ($address1 !== '') {
   $countSql .= " AND address1 LIKE ?";
-  $countParams[] = "%$address1%";
+  $countParams[] = '%' . $address1 . '%';
 }
 
 if ($mail !== '') {
   $countSql .= " AND mail LIKE ?";
-  $countParams[] = "%$mail%";
+  $countParams[] = '%' . $mail . '%';
 }
 
 if ($stop === '1') {
@@ -396,20 +396,34 @@ $count = count($customers);
           </table>
           <div class="pagination" style="padding:16px 24px;display:flex;gap:8px;justify-content:center;">
                <!-- ページネーションします。1ページあたり15件で、 -->
+            <?php 
+              $queryString = http_build_query(array_filter([
+                'codeFrom' => $codeFrom,
+                'codeTo' => $codeTo,
+                'name' => $name,
+                'kana' => $kana,
+                'sex' => $sex,
+                'group' => $group,
+                'zip' => $zip,
+                'address1' => $address1,
+                'mail' => $mail,
+                'stop' => $stop,
+              ]));
+            ?>
             <?php if ($page > 1): ?>
-              <a href="?page=<?= $page - 1 ?>" class="btn btn-ghost btn-sm">← Prev</a>
+              <a href="?page=<?= $page - 1 ?><?= $queryString ? '&' . $queryString : '' ?>" class="btn btn-ghost btn-sm">← Prev</a>
             <?php endif; ?>
 
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
               <?php if ($i == $page): ?>
                 <strong class="btn btn-primary btn-sm"><?= $i ?></strong>
               <?php else: ?>
-                <a href="?page=<?= $i ?>" class="btn btn-ghost btn-sm"><?= $i ?></a>
+                <a href="?page=<?= $i ?><?= $queryString ? '&' . $queryString : '' ?>" class="btn btn-ghost btn-sm"><?= $i ?></a>
               <?php endif; ?>
             <?php endfor; ?>
 
             <?php if ($page < $totalPages): ?>
-              <a href="?page=<?= $page + 1 ?>" class="btn btn-ghost btn-sm">Next →</a>
+              <a href="?page=<?= $page + 1 ?><?= $queryString ? '&' . $queryString : '' ?>" class="btn btn-ghost btn-sm">Next →</a>
             <?php endif; ?>
           </div>
         </div>

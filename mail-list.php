@@ -97,12 +97,12 @@ if ($codeTo !== '') {
 
 if ($name !== '') {
   $countSql .= " AND name LIKE ?";
-  $countParams[] = "%$name%";
+  $countParams[] = '%' . $name . '%';
 }
 
 if ($kana !== '') {
   $countSql .= " AND kana LIKE ?";
-  $countParams[] = "%$kana%";
+  $countParams[] = '%' . $kana . '%';
 }
 
 if ($sex !== '') {
@@ -112,17 +112,17 @@ if ($sex !== '') {
 
 if ($zip !== '') {
   $countSql .= " AND zip LIKE ?";
-  $countParams[] = "%$zip%";
+  $countParams[] = '%' . $zip . '%';
 }
 
 if ($address1 !== '') {
   $countSql .= " AND address1 LIKE ?";
-  $countParams[] = "%$address1%";
+  $countParams[] = '%' . $address1 . '%';
 }
 
 if ($mail !== '') {
   $countSql .= " AND mail LIKE ?";
-  $countParams[] = "%$mail%";
+  $countParams[] = '%' . $mail . '%';
 }
 if (!empty($groups)) {
   $placeholders = implode(',', array_fill(0, count($groups), '?'));
@@ -383,20 +383,38 @@ $count = count($customers);
               - 総ページ数分のページ番号リンクを表示する。現在のページは強調表示する
               - 現在のページが総ページ数より小さい場合は「Next」リンクを表示する
               */ -->
+              <?php
+                $groupParam = '';
+                if (!empty($groups)) {
+                  foreach ($groups as $g) {
+                    $groupParam .= '&group[]=' . urlencode($g);
+                  }
+                }
+                $queryString = http_build_query(array_filter([
+                  'codeFrom' => $codeFrom,
+                  'codeTo' => $codeTo,
+                  'name' => $name,
+                  'kana' => $kana,
+                  'sex' => $sex,
+                  'zip' => $zip,
+                  'address1' => $address1,
+                  'mail' => $mail,
+                ])) . $groupParam;
+              ?>
               <?php if ($page > 1): ?>
-                <a href="?page=<?= $page - 1 ?>" class="btn btn-ghost btn-sm">← Prev</a>
+                <a href="?page=<?= $page - 1 ?><?= $queryString ? '&' . $queryString : '' ?>" class="btn btn-ghost btn-sm">← Prev</a>
               <?php endif; ?>
 
               <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                 <?php if ($i == $page): ?>
                   <strong class="btn btn-primary btn-sm"><?= $i ?></strong>
                 <?php else: ?>
-                  <a href="?page=<?= $i ?>" class="btn btn-ghost btn-sm"><?= $i ?></a>
+                  <a href="?page=<?= $i ?><?= $queryString ? '&' . $queryString : '' ?>" class="btn btn-ghost btn-sm"><?= $i ?></a>
                 <?php endif; ?>
               <?php endfor; ?>
 
               <?php if ($page < $totalPages): ?>
-                <a href="?page=<?= $page + 1 ?>" class="btn btn-ghost btn-sm">Next →</a>
+                <a href="?page=<?= $page + 1 ?><?= $queryString ? '&' . $queryString : '' ?>" class="btn btn-ghost btn-sm">Next →</a>
               <?php endif; ?>
             </div>
           </div>

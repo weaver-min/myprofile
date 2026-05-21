@@ -1,7 +1,5 @@
 <?php
-session_start();
 require 'auth.php';
-require 'customer-validation.php';
 
 $errors = [];
 $values = [
@@ -14,32 +12,30 @@ $values = [
     'zip'      => '',
     'address1' => '',
     'mail'     => '',
-    'stop'     => '',
+    'stop'     => '0',
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $normalized = normalizeCustomerInput($_POST);
-    $normalized['codeFrom'] = trim($_POST['codeFrom'] ?? '');
-    $normalized['codeTo']   = trim($_POST['codeTo']   ?? '');
-    $values = $normalized;
+    // Flexible search: collect all input without strict validation
+    $values = [
+        'codeFrom' => trim($_POST['codeFrom'] ?? ''),
+        'codeTo'   => trim($_POST['codeTo'] ?? ''),
+        'name'     => trim($_POST['name'] ?? ''),
+        'kana'     => trim($_POST['kana'] ?? ''),
+        'sex'      => trim($_POST['sex'] ?? ''),
+        'group'    => trim($_POST['group'] ?? ''),
+        'zip'      => trim($_POST['zip'] ?? ''),
+        'address1' => trim($_POST['address1'] ?? ''),
+        'mail'     => trim($_POST['mail'] ?? ''),
+        'stop'     => isset($_POST['stop']) ? '' : '',
+    ];
 
-    if ($values['codeFrom'] === '' && $values['codeTo'] === '') {
-        $errors[] = '顧客コード（開始・終了のどちらか）を入力してください。';
-    }
-    if ($values['name'] === '') {
-        $errors[] = '顧客名を入力してください。';
-    }
-    if ($values['kana'] !== '' && !preg_match('/\A[\p{Hiragana}\p{Katakana}\x{30FC}\x{3000}\s]+\z/u', $values['kana'])) {
-        $errors[] = 'フリガナは日本語のひらがな・カタカナで入力してください。';
-    }
-    if ($values['sex'] === '') {
-        $errors[] = '性別を選択してください。';
-    }
-    if ($values['group'] === '') {
-        $errors[] = 'グループを選択してください。';
-    }
-    if ($values['mail'] === '') {
-        $errors[] = 'メールアドレスを入力してください。';
+    // At least one field must be filled to search
+    if ($values['codeFrom'] === '' && $values['codeTo'] === '' && $values['name'] === '' && 
+        $values['kana'] === '' && $values['sex'] === '' && $values['group'] === '' && 
+        $values['zip'] === '' && $values['address1'] === '' && $values['mail'] === '' && 
+        $values['stop'] === '') {
+        $errors[] = 'すくなくとも1つの検索条件を入力してください。';
     }
 
     $_SESSION['form_errors'] = $errors;
@@ -333,7 +329,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                 <div class="form-check-group">
                   <label>
                     <input type="checkbox" name="stop" value="1"
-                           <?= $values['stop'] === '1' ? 'checked' : '' ?>>
+                           <?= $values['stop'] === '' ? 'checked' : '' ?>>
                     配信停止のみ表示
                   </label>
                 </div>
