@@ -157,22 +157,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <?php if ($error): ?>
             <div
               style="background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:13px;">
-              <?= htmlspecialchars($error) ?>
+              <?php echo htmlspecialchars($error); ?>
             </div>
           <?php endif; ?>
           <?php if ($success): ?>
-            <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
+            <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
           <?php endif; ?>
           <form method="post" action="mail-police.php">
             <div class="form-group">
               <label class="form-label">メール送信者名</label>
               <input type="text" name="sender_name" class="form-control" placeholder="送信者として表示される名前"
-                value="<?= htmlspecialchars($settings['sender_name'] ?? '') ?>">
+                value="<?php echo htmlspecialchars($settings['sender_name'] ?? ''); ?>">
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label">メール送信アドレス</label>
               <input type="email" name="sender_email" class="form-control" placeholder="no-reply@example.com"
-                value="<?= htmlspecialchars($settings['sender_email'] ?? '') ?>">
+                value="<?php echo htmlspecialchars($settings['sender_email'] ?? ''); ?>">
               <p style="margin-top:6px;font-size:12px;color:var(--text-muted);">このアドレスから送信されます。受信者が返信した際の宛先にもなります。</p>
             </div>
             <div class="form-footer">

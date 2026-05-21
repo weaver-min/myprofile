@@ -170,14 +170,14 @@ if (!$customer) {
         <li><span class="sep">›</span></li>
         <li><a href="customer-list.php">顧客情報一覧</a></li>
         <li><span class="sep">›</span></li>
-        <li><a href="customer-detail.php?id=<?= $customer['customer_id'] ?>">顧客情報詳細</a></li>
+        <li><a href="customer-detail.php?id=<?php echo $customer['customer_id']; ?>">顧客情報詳細</a></li>
         <li><span class="sep">›</span></li>
         <li><span class="current">顧客情報編集</span></li>
       </ol>
       <div class="topbar-right">
         <!-- delete button -->
         <form method="post" action="delete.php" style="display:inline;">
-          <input type="hidden" name="id" value="<?= $customer['customer_id'] ?>">
+          <input type="hidden" name="id" value="<?php echo $customer['customer_id']; ?>">
           <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('この顧客情報を削除しますか？')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round">
@@ -233,32 +233,32 @@ if (!$customer) {
                 <div class="form-group">
                   <label class="form-label">顧客コード</label>
                   <input type="text" id="customer_id_display" class="form-control"
-                    value="<?= htmlspecialchars($customer['customer_id']) ?>" disabled>
+                    value="<?php echo htmlspecialchars($customer['customer_id']); ?>" disabled>
                 </div>
                 <div class="form-group">
                   <label class="form-label">顧客名</label>
                   <input type="text" name="name" class="form-control" required
-                    value="<?= htmlspecialchars($old['name'] ?? $customer['name']) ?>">
+                    value="<?php echo htmlspecialchars($old['name'] ?? $customer['name']); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label">フリガナ</label>
                   <input type="text" name="kana" class="form-control" pattern="[ぁ-んァ-ヴヶー\s]+" title="ひらがな・カタカナで入力してください"
-                    required value="<?= htmlspecialchars($old['kana'] ?? $customer['kana']) ?>">
+                    required value="<?php echo htmlspecialchars($old['kana'] ?? $customer['kana']); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label">性別</label>
                   <div class="form-radio-group">
-                    <label><input type="radio" name="sex" value="男" <?= $old['sex'] ?? $customer['sex'] === '男' ? 'checked' : '' ?>> 男</label>
-                    <label><input type="radio" name="sex" value="女" <?= $old['sex'] ?? $customer['sex'] === '女' ? 'checked' : '' ?>> 女</label>
+                    <label><input type="radio" name="sex" value="男" <?php echo ($old['sex'] ?? $customer['sex']) === '男' ? 'checked' : ''; ?>> 男</label>
+                    <label><input type="radio" name="sex" value="女" <?php echo ($old['sex'] ?? $customer['sex']) === '女' ? 'checked' : ''; ?>> 女</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="form-label">グループ</label>
                   <select name="group" class="form-control form-select" style="max-width:120px;">
-                    <option value="A" <?= $old['group'] ?? $customer['group'] === 'A' ? 'selected' : '' ?>>A</option>
-                    <option value="B" <?= $old['group'] ?? $customer['group'] === 'B' ? 'selected' : '' ?>>B</option>
-                    <option value="C" <?= $old['group'] ?? $customer['group'] === 'C' ? 'selected' : '' ?>>C</option>
-                    <option value="D" <?= $old['group'] ?? $customer['group'] === 'D' ? 'selected' : '' ?>>D</option>
+                    <option value="A" <?php echo ($old['group'] ?? $customer['group']) === 'A' ? 'selected' : ''; ?>>A</option>
+                    <option value="B" <?php echo ($old['group'] ?? $customer['group']) === 'B' ? 'selected' : ''; ?>>B</option>
+                    <option value="C" <?php echo ($old['group'] ?? $customer['group']) === 'C' ? 'selected' : ''; ?>>C</option>
+                    <option value="D" <?php echo ($old['group'] ?? $customer['group']) === 'D' ? 'selected' : ''; ?>>D</option>
                   </select>
                 </div>
               </div>
@@ -267,29 +267,29 @@ if (!$customer) {
                 <div class="form-group">
                   <label class="form-label">郵便番号</label>
                   <input type="text" name="zip" class="form-control" style="max-width:180px;"
-                    value="<?= htmlspecialchars($old['zip'] ?? $customer['zip']) ?>">
+                    value="<?php echo htmlspecialchars($old['zip'] ?? $customer['zip']); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label">住所1</label>
                   <input type="text" name="address1" class="form-control"
-                    value="<?= htmlspecialchars($old['address1'] ?? $customer['address1']) ?>">
+                    value="<?php echo htmlspecialchars($old['address1'] ?? $customer['address1']); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label">住所2</label>
                   <input type="text" name="address2" class="form-control"
-                    value="<?= htmlspecialchars($old['address2'] ?? $customer['address2']) ?>">
+                    value="<?php echo htmlspecialchars($old['address2'] ?? $customer['address2']); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label">メールアドレス</label>
                   <input type="email" name="mail" class="form-control"
                     pattern="[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}"
                     title="example@domain.co.jp のような正しいメールアドレスを入力してください" required
-                    value="<?= htmlspecialchars($old['mail'] ?? $customer['mail']) ?>">
+                    value="<?php echo htmlspecialchars($old['mail'] ?? $customer['mail']); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label">配信停止</label>
                   <div class="form-check-group">
-                    <label><input type="checkbox" name="stop" value="1" <?= $old['stop'] ?? $customer['stop'] ? 'checked' : '' ?>>
+                    <label><input type="checkbox" name="stop" value="1" <?php echo ($old['stop'] ?? $customer['stop']) ? 'checked' : ''; ?>>
                       配信を停止する</label>
                   </div>
                 </div>
@@ -299,7 +299,7 @@ if (!$customer) {
                 <div class="form-group" style="margin-bottom:0;">
                   <label class="form-label">備考</label>
                   <textarea class="form-control" name="note"
-                    rows="4"><?= htmlspecialchars($old['note'] ?? $customer['note']) ?></textarea>
+                    rows="4"><?php echo htmlspecialchars($old['note'] ?? $customer['note']); ?></textarea>
                 </div>
               </div>
             </div>

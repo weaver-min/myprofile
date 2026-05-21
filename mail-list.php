@@ -361,16 +361,16 @@ $count = count($customers);
                 <?php else: ?>
                   <?php foreach ($customers as $ccustomer): ?>
                     <tr>
-                      <td class="center"><input type="checkbox" name="send[]" value="<?= (int) $ccustomer['customer_id'] ?>">
+                      <td class="center"><input type="checkbox" name="send[]" value="<?php echo (int) $ccustomer['customer_id']; ?>">
                       </td>
                       <td><span
-                          class="badge badge-gray"><?= htmlspecialchars($ccustomer['customer_id'], ENT_QUOTES, 'UTF-8') ?></span>
+                          class="badge badge-gray"><?php echo htmlspecialchars($ccustomer['customer_id'], ENT_QUOTES, 'UTF-8'); ?></span>
                       </td>
-                      <td style="font-weight:600;"><?= htmlspecialchars($ccustomer['name'], ENT_QUOTES, 'UTF-8') ?></td>
-                      <td class="text-muted"><?= htmlspecialchars($ccustomer['kana'], ENT_QUOTES, 'UTF-8') ?></td>
-                      <td><?= htmlspecialchars($ccustomer['mail'], ENT_QUOTES, 'UTF-8') ?></td>
+                      <td style="font-weight:600;"><?php echo htmlspecialchars($ccustomer['name'], ENT_QUOTES, 'UTF-8'); ?></td>
+                      <td class="text-muted"><?php echo htmlspecialchars($ccustomer['kana'], ENT_QUOTES, 'UTF-8'); ?></td>
+                      <td><?php echo htmlspecialchars($ccustomer['mail'], ENT_QUOTES, 'UTF-8'); ?></td>
                       <td><span
-                          class="badge badge-indigo"><?= htmlspecialchars($ccustomer['group'], ENT_QUOTES, 'UTF-8') ?></span>
+                          class="badge badge-indigo"><?php echo htmlspecialchars($ccustomer['group'], ENT_QUOTES, 'UTF-8'); ?></span>
                       </td>
                     </tr>
                   <?php endforeach; ?>
@@ -407,9 +407,9 @@ $count = count($customers);
 
               <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                 <?php if ($i == $page): ?>
-                  <strong class="btn btn-primary btn-sm"><?= $i ?></strong>
+                  <strong class="btn btn-primary btn-sm"><?php echo $i; ?></strong>
                 <?php else: ?>
-                  <a href="?page=<?= $i ?><?= $queryString ? '&' . $queryString : '' ?>" class="btn btn-ghost btn-sm"><?= $i ?></a>
+                  <a href="?page=<?= $i ?><?= $queryString ? '&' . $queryString : '' ?>" class="btn btn-ghost btn-sm"><?php echo $i; ?></a>
                 <?php endif; ?>
               <?php endfor; ?>
 
@@ -420,7 +420,7 @@ $count = count($customers);
           </div>
           <div
             style="padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;">
-            <button type="button" class="btn btn-ghost"><a href="mail-search.php">戻る</a></button>
+             <button type="button" class="btn btn-ghost" onclick="history.back()">戻る</button>
             <button type="submit" class="btn btn-primary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round">

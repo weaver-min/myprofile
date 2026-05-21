@@ -126,7 +126,7 @@ $count = (int) ($_GET['count'] ?? 0);
             </svg>
           </div>
           <div class="completion-title">メールの送信が完了しました</div>
-          <div class="completion-sub"><?= $count ?>件の送信先にメールを送信しました。</div>
+          <div class="completion-sub"><?php echo $count; ?>件の送信先にメールを送信しました。</div>
           <div style="display:flex;gap:12px;justify-content:center;">
             <a href="mail-search.php" class="btn btn-primary btn-lg">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

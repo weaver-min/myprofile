@@ -342,7 +342,7 @@ $count = count($customers);
       <div class="page-header">
         <div>
           <div class="page-title">顧客情報一覧</div>
-          <div class="page-subtitle">検索結果：<?= $count ?>件</div>
+          <div class="page-subtitle">検索結果：<?php echo $count; ?>件</div>
         </div>
         <a href="customer-search.php" class="btn btn-ghost btn-sm">条件を変更</a>
       </div>
@@ -369,16 +369,16 @@ $count = count($customers);
               <?php else: ?>
                 <?php foreach ($customers as $customer): ?>
                   <tr>
-                    <td><span class="badge badge-gray"><?= htmlspecialchars($customer['customer_id']) ?></span></td>
+                    <td><span class="badge badge-gray"><?php echo htmlspecialchars($customer['customer_id']); ?></span></td>
                     <td>
                       <a href="customer-detail.php?id=<?= $customer['customer_id'] ?>" style="color:var(--text);font-weight:600;">
-                        <?= htmlspecialchars($customer['name']) ?>
+                        <?php echo htmlspecialchars($customer['name']); ?>
                       </a>
                     </td>
-                    <td class="text-muted"><?= htmlspecialchars($customer['kana']) ?></td>
-                    <td><?= htmlspecialchars($customer['sex']) ?></td>
-                    <td><?= htmlspecialchars($customer['mail']) ?></td>
-                    <td><span class="badge badge-indigo"><?= htmlspecialchars($customer['group']) ?></span></td>
+                    <td class="text-muted"><?php echo htmlspecialchars($customer['kana']); ?></td>
+                    <td><?php echo htmlspecialchars($customer['sex']); ?></td>
+                    <td><?php echo htmlspecialchars($customer['mail']); ?></td>
+                    <td><span class="badge badge-indigo"><?php echo htmlspecialchars($customer['group']); ?></span></td>
                     <td>
                       <?php if ($customer['stop']): ?>
                         <span class="badge badge-red">停止中</span>

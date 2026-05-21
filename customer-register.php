@@ -233,29 +233,29 @@ if (isset($_GET['clear'])) {
               <div>
                 <div class="form-group">
                   <label class="form-label required">顧客名</label>
-                  <input type="text" name="name" class="form-control<?= errCls('name', $fieldErrors) ?>" placeholder="例：田中 太郎"
-                    value="<?= htmlspecialchars($old['name'] ?? '') ?>">
+                  <input type="text" name="name" class="form-control<?php echo errCls('name', $fieldErrors); ?>" placeholder="例：田中 太郎"
+                    value="<?php echo htmlspecialchars($old['name'] ?? ''); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label required">フリガナ</label>
-                  <input type="text" name="kana" class="form-control<?= errCls('kana', $fieldErrors) ?>" placeholder="例：タナカ タロウ"
-                    value="<?= htmlspecialchars($old['kana'] ?? '') ?>">
+                  <input type="text" name="kana" class="form-control<?php echo errCls('kana', $fieldErrors); ?>" placeholder="例：タナカ タロウ"
+                    value="<?php echo htmlspecialchars($old['kana'] ?? ''); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label required">性別</label>
-                  <div class="form-radio-group<?= hasFieldError('sex', $fieldErrors) ? ' is-invalid' : '' ?>">
-                    <label><input type="radio" name="sex" value="男" <?= ($old['sex'] ?? '') === '男' ? 'checked' : '' ?>>
+                  <div class="form-radio-group<?php echo hasFieldError('sex', $fieldErrors) ? ' is-invalid' : ''; ?>">
+                    <label><input type="radio" name="sex" value="男" <?php echo ($old['sex'] ?? '') === '男' ? 'checked' : ''; ?>>
                       男</label>
-                    <label><input type="radio" name="sex" value="女" <?= ($old['sex'] ?? '') === '女' ? 'checked' : '' ?>>
+                    <label><input type="radio" name="sex" value="女" <?php echo ($old['sex'] ?? '') === '女' ? 'checked' : ''; ?>>
                       女</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="form-label required">グループ</label>
-                  <select name="group" class="form-control form-select<?= errCls('group', $fieldErrors) ?>" style="width:120px;">
+                  <select name="group" class="form-control form-select<?php echo errCls('group', $fieldErrors); ?>" style="width:120px;">
                     <?php foreach (['A', 'B', 'C', 'D'] as $g): ?>
-                      <option value="<?= $g ?>" <?= ($old['group'] ?? '') === $g ? 'selected' : '' ?>>
-                        <?= $g ?>
+                      <option value="<?php echo htmlspecialchars($g); ?>" <?php echo ($old['group'] ?? '') === $g ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($g); ?>
                       </option>
                     <?php endforeach; ?>
                   </select>
@@ -267,27 +267,27 @@ if (isset($_GET['clear'])) {
                 <div class="form-group">
                   <label class="form-label">郵便番号</label>
                   <input type="text" name="zip" class="form-control" placeholder="例：100-0001"
-                    value="<?= htmlspecialchars($old['zip'] ?? '') ?>" style="max-width:180px;">
+                    value="<?php echo htmlspecialchars($old['zip'] ?? ''); ?>" style="max-width:180px;">
                 </div>
                 <div class="form-group">
                   <label class="form-label">住所1</label>
                   <input type="text" name="address1" class="form-control" placeholder="都道府県・市区町村"
-                    value="<?= htmlspecialchars($old['address1'] ?? '') ?>">
+                    value="<?php echo htmlspecialchars($old['address1'] ?? ''); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label">住所2</label>
                   <input type="text" name="address2" class="form-control" placeholder="番地・建物名"
-                    value="<?= htmlspecialchars($old['address2'] ?? '') ?>">
+                    value="<?php echo htmlspecialchars($old['address2'] ?? ''); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label required">メールアドレス</label>
-                  <input type="email" name="mail" class="form-control<?= errCls('mail', $fieldErrors) ?>" placeholder="example@domain.com"
-                    value="<?= htmlspecialchars($old['mail'] ?? '') ?>">
+                  <input type="email" name="mail" class="form-control<?php echo errCls('mail', $fieldErrors); ?>" placeholder="example@domain.com"
+                    value="<?php echo htmlspecialchars($old['mail'] ?? ''); ?>">
                 </div>
                 <div class="form-group">
                   <label class="form-label">配信停止</label>
                   <div class="form-check-group">
-                    <label><input type="checkbox" name="stop" value="1" <?= !empty($old['stop']) ? 'checked' : '' ?>>
+                    <label><input type="checkbox" name="stop" value="1" <?php echo !empty($old['stop']) ? 'checked' : ''; ?>>
                       配信を停止する</label>
                   </div>
                 </div>

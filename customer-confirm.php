@@ -202,64 +202,64 @@ if ($errors) {
       <div class="card">
         <div class="card-body">
           <form method="post" action="store.php">
-            <input type="hidden" name="name" value="<?= htmlspecialchars($data['name']) ?>">
-            <input type="hidden" name="kana" value="<?= htmlspecialchars($data['kana']) ?>">
-            <input type="hidden" name="sex" value="<?= htmlspecialchars($data['sex']) ?>">
-            <input type="hidden" name="group" value="<?= htmlspecialchars($data['group']) ?>">
-            <input type="hidden" name="zip" value="<?= htmlspecialchars($data['zip']) ?>">
-            <input type="hidden" name="address1" value="<?= htmlspecialchars($data['address1']) ?>">
-            <input type="hidden" name="address2" value="<?= htmlspecialchars($data['address2']) ?>">
-            <input type="hidden" name="mail" value="<?= htmlspecialchars($data['mail']) ?>">
-            <input type="hidden" name="stop" value="<?= $data['stop'] ?>">
-            <input type="hidden" name="note" value="<?= htmlspecialchars($data['note']) ?>">
+            <input type="hidden" name="name" value="<?php echo htmlspecialchars($data['name']); ?>">
+            <input type="hidden" name="kana" value="<?php echo htmlspecialchars($data['kana']); ?>">
+            <input type="hidden" name="sex" value="<?php echo htmlspecialchars($data['sex']); ?>">
+            <input type="hidden" name="group" value="<?php echo htmlspecialchars($data['group']); ?>">
+            <input type="hidden" name="zip" value="<?php echo htmlspecialchars($data['zip']); ?>">
+            <input type="hidden" name="address1" value="<?php echo htmlspecialchars($data['address1']); ?>">
+            <input type="hidden" name="address2" value="<?php echo htmlspecialchars($data['address2']); ?>">
+            <input type="hidden" name="mail" value="<?php echo htmlspecialchars($data['mail']); ?>">
+            <input type="hidden" name="stop" value="<?php echo $data['stop'] ? '1' : '0'; ?>">
+            <input type="hidden" name="note" value="<?php echo htmlspecialchars($data['note']); ?>">
 
             <div class="form-grid">
               <div>
                 <div class="form-group">
                   <div class="form-label">顧客名</div>
-                  <div class="info-box"><?= htmlspecialchars($data['name']) ?></div>
+                  <div class="info-box"><?php echo htmlspecialchars($data['name']); ?></div>
                 </div>
                 <div class="form-group">
                   <div class="form-label">フリガナ</div>
-                  <div class="info-box"><?= htmlspecialchars($data['kana']) ?></div>
+                  <div class="info-box"><?php echo htmlspecialchars($data['kana']); ?></div>
                 </div>
                 <div class="form-group">
                   <div class="form-label">性別</div>
-                  <div class="info-box"><?= htmlspecialchars($data['sex']) ?></div>
+                  <div class="info-box"><?php echo htmlspecialchars($data['sex']); ?></div>
                 </div>
                 <div class="form-group">
                   <div class="form-label">グループ</div>
-                  <div class="info-box"><?= htmlspecialchars($data['group']) ?></div>
+                  <div class="info-box"><?php echo htmlspecialchars($data['group']); ?></div>
                 </div>
               </div>
 
               <div>
                 <div class="form-group">
                   <div class="form-label">郵便番号</div>
-                  <div class="info-box"><?= htmlspecialchars($data['zip']) ?></div>
+                  <div class="info-box"><?php echo htmlspecialchars($data['zip']); ?></div>
                 </div>
                 <div class="form-group">
                   <div class="form-label">住所1</div>
-                  <div class="info-box"><?= htmlspecialchars($data['address1']) ?></div>
+                  <div class="info-box"><?php echo htmlspecialchars($data['address1']); ?></div>
                 </div>
                 <div class="form-group">
                   <div class="form-label">住所2</div>
-                  <div class="info-box"><?= htmlspecialchars($data['address2']) ?></div>
+                  <div class="info-box"><?php echo htmlspecialchars($data['address2']); ?></div>
                 </div>
                 <div class="form-group">
                   <div class="form-label">メールアドレス</div>
-                  <div class="info-box"><?= htmlspecialchars($data['mail']) ?></div>
+                  <div class="info-box"><?php echo htmlspecialchars($data['mail']); ?></div>
                 </div>
                 <div class="form-group">
                   <div class="form-label">配信停止</div>
-                  <div class="info-box"><?= $data['stop'] ? '停止する' : '停止しない' ?></div>
+                  <div class="info-box"><?php echo $data['stop'] ? '停止する' : '停止しない'; ?></div>
                 </div>
               </div>
 
               <div class="form-full">
                 <div class="form-group" style="margin-bottom:0;">
                   <div class="form-label">備考</div>
-                  <div class="info-box" style="min-height:80px;"><?= htmlspecialchars($data['note']) ?></div>
+                  <div class="info-box" style="min-height:80px;"><?php echo htmlspecialchars($data['note']); ?></div>
                 </div>
               </div>
             </div>

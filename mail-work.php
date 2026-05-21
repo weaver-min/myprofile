@@ -137,7 +137,7 @@ $templates = $pdo->query("SELECT * FROM mail_templates ORDER BY id ASC")->fetchA
             <div class="form-group">
               <label class="form-label">メールタイトル</label>
               <input type="text" name="title" class="form-control" placeholder="メールの件名を入力"
-                value="<?= htmlspecialchars($title) ?>" required>
+                value="<?php echo htmlspecialchars($title); ?>" required>
             </div>
             <!-- template buttons -->
             <div class="form-group">
@@ -146,9 +146,9 @@ $templates = $pdo->query("SELECT * FROM mail_templates ORDER BY id ASC")->fetchA
                 <?php foreach ($templates as $template): ?>
                   <?php if ($template['template_name'] !== ''): ?>
                     <button type="button" class="btn btn-ghost btn-sm tmpl-btn"
-                      data-name="<?= htmlspecialchars($template['template_name']) ?>"
-                      data-body="<?= htmlspecialchars($template['template_body']) ?>">
-                      <?= htmlspecialchars($template['template_name']) ?>
+                      data-name="<?php echo htmlspecialchars($template['template_name']); ?>"
+                      data-body="<?php echo htmlspecialchars($template['template_body']); ?>">
+                      <?php echo htmlspecialchars($template['template_name']); ?>
                     </button>
                   <?php endif; ?>
                 <?php endforeach; ?>
@@ -157,7 +157,7 @@ $templates = $pdo->query("SELECT * FROM mail_templates ORDER BY id ASC")->fetchA
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label">メール本文</label>
               <textarea name="body" class="form-control" rows="14" placeholder="メール本文を入力してください." required>
-                <?= htmlspecialchars($body) ?></textarea>
+                <?php echo htmlspecialchars($body); ?></textarea>
 
                 <div class="form-footer">
                   <button type="reset" class="btn btn-ghost">クリア</button>

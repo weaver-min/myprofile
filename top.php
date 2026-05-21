@@ -161,7 +161,7 @@ $lastMail = $pdo->query("SELECT * FROM mail_history ORDER BY sent_at DESC LIMIT 
       </ol>
       <div class="topbar-right">
         <!-- dynamic date -->
-        <span class="text-muted text-sm"><?= date('Y-m-d') ?></span>
+        <span class="text-muted text-sm"><?php echo date('Y-m-d'); ?></span>
         <a href="logout.php" class="btn btn-ghost btn-sm" onclick="return confirm('ログアウトしますか？')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round">
@@ -196,27 +196,27 @@ $lastMail = $pdo->query("SELECT * FROM mail_history ORDER BY sent_at DESC LIMIT 
       <div class="stats-grid mb-6">
         <div class="stat-card">
           <div class="stat-label">Aグループ 登録数</div>
-          <div class="stat-value"><?= $groupA ?></div>
+          <div class="stat-value"><?php echo htmlspecialchars($groupA); ?></div>
           <div class="stat-sub">&nbsp;</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Bグループ 登録数</div>
-          <div class="stat-value"><?= $groupB ?></div>
+          <div class="stat-value"><?php echo htmlspecialchars($groupB); ?></div>
           <div class="stat-sub">&nbsp;</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Cグループ 登録数</div>
-          <div class="stat-value"><?= $groupC ?></div>
+          <div class="stat-value"><?php echo htmlspecialchars($groupC); ?></div>
           <div class="stat-sub">&nbsp;</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Dグループ 登録数</div>
-          <div class="stat-value"><?= $groupD ?></div>
+          <div class="stat-value"><?php echo htmlspecialchars($groupD); ?></div>
           <div class="stat-sub">&nbsp;</div>
         </div>
         <div class="stat-card red">
           <div class="stat-label">配信停止数</div>
-          <div class="stat-value"><?= $stopped ?></div>
+          <div class="stat-value"><?php echo htmlspecialchars($stopped); ?></div>
           <div class="stat-sub">&nbsp;</div>
         </div>
       </div>
@@ -238,11 +238,11 @@ $lastMail = $pdo->query("SELECT * FROM mail_history ORDER BY sent_at DESC LIMIT 
           <div class="card-body">
             <div class="form-group">
               <div class="form-label">前回の送信日時</div>
-              <div class="info-box"><?= $lastMail ? htmlspecialchars($lastMail['sent_at']) : '—' ?></div>
+              <div class="info-box"><?php echo $lastMail ? htmlspecialchars($lastMail['sent_at']) : '—'; ?></div>
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <div class="form-label">前回のメールタイトル</div>
-              <div class="info-box"><?= $lastMail ? htmlspecialchars($lastMail['subject']) : '—' ?></div>
+              <div class="info-box"><?php echo $lastMail ? htmlspecialchars($lastMail['subject']) : '—'; ?></div>
             </div>
             <div style="margin-top:16px;text-align:right;">
               <a href="mail-list.php" class="btn btn-secondary btn-sm">詳しく見る →</a>
@@ -266,11 +266,11 @@ $lastMail = $pdo->query("SELECT * FROM mail_history ORDER BY sent_at DESC LIMIT 
           <div class="card-body">
             <div class="form-group">
               <div class="form-label">送信者名</div>
-              <div class="info-box"><?= $settings ? htmlspecialchars($settings['sender_name']) : '未設定' ?></div>
+              <div class="info-box"><?php echo $settings ? htmlspecialchars($settings['sender_name']) : '未設定'; ?></div>
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <div class="form-label">送信アドレス</div>
-              <div class="info-box"><?= $settings ? htmlspecialchars($settings['sender_email']) : '未設定' ?></div>
+              <div class="info-box"><?php echo $settings ? htmlspecialchars($settings['sender_email']) : '未設定'; ?></div>
             </div>
           </div>
         </div>

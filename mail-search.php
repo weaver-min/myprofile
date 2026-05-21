@@ -1,8 +1,5 @@
 <?php
-session_start();
 require 'auth.php';
-
-$errors = [];
 $values = [
     'codeFrom' => '',
     'codeTo'   => '',
@@ -32,32 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'mail'     => trim($_POST['mail'] ?? ''),
         'group'    => $groupValues,
     ];
-
-    // At least one field must be filled to search
-    if ($values['codeFrom'] === '' && $values['codeTo'] === '' && $values['name'] === '' && 
-        $values['kana'] === '' && $values['sex'] === '' && $values['zip'] === '' && 
-        $values['address1'] === '' && $values['mail'] === '' && empty($values['group'])) {
-        $errors[] = 'すくなくとも1つの検索条件を入力してください。';
-    }
-
-    $_SESSION['form_errors'] = $errors;
     $_SESSION['form_values'] = $values;
-
-    if (empty($errors)) {
-        header('Location: mail-list.php?' . http_build_query($values));
-    } else {
-        header('Location: mail-search.php');
-    }
+       header('Location: mail-list.php?' . http_build_query($values));
     exit;
 }
 
-// on GET: restore from session if available
-$errors = $_SESSION['form_errors'] ?? [];
 $values = $_SESSION['form_values'] ?? $values;
-if (!isset($values['group']) || !is_array($values['group'])) {
-    $values['group'] = [];
-}
-unset($_SESSION['form_errors'], $_SESSION['form_values']);
+unset($_SESSION['form_values']);
 ?>
 <!doctype html>
 <html lang="ja">
@@ -251,7 +229,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
           <line x1="12" y1="8" x2="12" y2="12" />
           <line x1="12" y1="16" x2="12.01" y2="16" />
         </svg>
-        <div><?= implode('<br>', array_map('htmlspecialchars', $errors)) ?></div>
+        <div><?php echo implode('<br>', array_map('htmlspecialchars', $errors)); ?></div>
       </div>
       <?php endif; ?>
 
@@ -264,11 +242,11 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                   <label class="form-label">顧客コード</label>
                   <div class="form-code-range">
                     <input type="text" name="codeFrom" class="form-control"
-                           value="<?= htmlspecialchars($values['codeFrom']) ?>"
+                           value="<?php echo htmlspecialchars($values['codeFrom']); ?>"
                            placeholder="開始コード">
                     <span class="form-sep">〜</span>
                     <input type="text" name="codeTo" class="form-control"
-                           value="<?= htmlspecialchars($values['codeTo']) ?>"
+                           value="<?php echo htmlspecialchars($values['codeTo']); ?>"
                            placeholder="終了コード">
                   </div>
                 </div>
@@ -277,13 +255,13 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
               <div class="form-group">
                 <label class="form-label">顧客名</label>
                 <input type="text" name="name" class="form-control"
-                       value="<?= htmlspecialchars($values['name']) ?>"
+                       value="<?php echo htmlspecialchars($values['name']); ?>"
                        placeholder="顧客名で検索">
               </div>
               <div class="form-group">
                 <label class="form-label">フリガナ</label>
                 <input type="text" name="kana" class="form-control"
-                       value="<?= htmlspecialchars($values['kana']) ?>"
+                       value="<?php echo htmlspecialchars($values['kana']); ?>"
                        placeholder="フリガナで検索">
               </div>
 
@@ -298,20 +276,20 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
               <div class="form-group">
                 <label class="form-label">郵便番号</label>
                 <input type="text" name="zip" class="form-control"
-                       value="<?= htmlspecialchars($values['zip']) ?>"
+                       value="<?php echo htmlspecialchars($values['zip']); ?>"
                        placeholder="例：100-0001" style="max-width:180px;">
               </div>
               <div class="form-group">
                 <label class="form-label">住所1</label>
                 <input type="text" name="address1" class="form-control"
-                       value="<?= htmlspecialchars($values['address1']) ?>"
+                       value="<?php echo htmlspecialchars($values['address1']); ?>"
                        placeholder="都道府県・市区町村">
               </div>
 
               <div class="form-group">
                 <label class="form-label">メールアドレス</label>
                 <input type="text" name="mail" class="form-control"
-                       value="<?= htmlspecialchars($values['mail']) ?>"
+                       value="<?php echo htmlspecialchars($values['mail']); ?>"
                        placeholder="example@domain.com">
               </div>
 
@@ -324,9 +302,9 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                   <div class="form-check-group">
                     <?php foreach (['A', 'B', 'C', 'D'] as $gp): ?>
                     <label>
-                      <input type="checkbox" name="group[]" value="<?= $gp ?>"
-                             <?= in_array($gp, $values['group'], true) ? 'checked' : '' ?>>
-                      <?= $gp ?>
+                      <input type="checkbox" name="group[]" value="<?php echo htmlspecialchars($gp); ?>"
+                             <?php echo in_array($gp, $values['group'], true) ? 'checked' : ''; ?>>
+                      <?php echo htmlspecialchars($gp); ?>
                     </label>
                     <?php endforeach; ?>
                   </div>

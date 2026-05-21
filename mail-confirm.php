@@ -173,8 +173,8 @@ $customers = $stmt->fetchAll();
           <?php foreach ($_SESSION['mail_data']['send'] as $id): ?>
             <input type="hidden" name="send[]" value="<?= (int) $id ?>">
           <?php endforeach; ?>
-          <input type="hidden" name="title" value="<?= htmlspecialchars($_SESSION['mail_data']['title']) ?>">
-          <input type="hidden" name="body" value="<?= htmlspecialchars($_SESSION['mail_data']['body']) ?>">
+          <input type="hidden" name="title" value="<?php echo htmlspecialchars($_SESSION['mail_data']['title']); ?>">
+          <input type="hidden" name="body" value="<?php echo htmlspecialchars($_SESSION['mail_data']['body']); ?>">
           <button class="btn btn-ghost btn-sm" onclick="return confirm('前の画面に戻りますか？入力内容は保存されます。')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round">
@@ -218,13 +218,13 @@ $customers = $stmt->fetchAll();
 
           <div class="form-group">
             <div class="form-label">メールタイトル</div>
-            <div class="info-box"><?= htmlspecialchars($title) ?></div>
+            <div class="info-box"><?php echo htmlspecialchars($title); ?></div>
           </div>
 
           <div class="form-group">
             <div class="form-label">メール本文</div>
             <div class="info-box" style="min-height:200px;white-space:pre-wrap;line-height:1.8;">
-              <?= htmlspecialchars($body) ?>
+              <?php echo htmlspecialchars($body); ?>
             </div>
           </div>
 
@@ -232,7 +232,7 @@ $customers = $stmt->fetchAll();
             <div class="form-label">メール送信先（<?= count($customers) ?>件）</div>
             <div class="info-box" style="line-height:2;color:var(--text-muted);">
               <?php foreach ($customers as $customer): ?>
-                <?= htmlspecialchars($customer['customer_id']) ?>：<?= htmlspecialchars($customer['name']) ?><br>
+                <?php echo htmlspecialchars($customer['customer_id']); ?>：<?php echo htmlspecialchars($customer['name']); ?><br>
               <?php endforeach; ?>
             </div>
           </div>
