@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 require 'customer-validation.php';
 /* - POSTされたデータを受け取る
  - customer_idを取得する

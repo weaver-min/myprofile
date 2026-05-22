@@ -1,7 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
-
+require 'header.php';
 // get customer id from URL
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 //もし　開始コード　に　０だけ入れた場合

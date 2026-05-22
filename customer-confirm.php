@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 require 'customer-validation.php';
 
 $data = normalizeCustomerInput($_POST);

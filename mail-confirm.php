@@ -1,7 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
-
+require 'header.php';
 $send = $_POST['send'] ?? [];
 $title = $_POST['title'] ?? '';
 $body = $_POST['body'] ?? '';

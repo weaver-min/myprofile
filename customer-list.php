@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 /* ---------------------------
    PAGINATION SETUP 
 ---------------------------- */
@@ -344,7 +343,6 @@ $count = count($customers);
           <div class="page-title">顧客情報一覧</div>
           <div class="page-subtitle">検索結果：<?php echo $count; ?>件</div>
         </div>
-        <a href="customer-search.php" class="btn btn-ghost btn-sm">条件を変更</a>
       </div>
       <div class="card">
         <div class="table-wrap">

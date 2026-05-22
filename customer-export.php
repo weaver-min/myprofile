@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 
 // CSV download header
 header('Content-Type: text/csv; charset=UTF-8');

@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 // receive selected customer IDs from mail-list.php
 $title = $_POST['title'] ?? '';
 $body = $_POST['body'] ?? '';

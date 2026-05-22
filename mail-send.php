@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 // get data from session (PRG pattern)
 $mailData = $_SESSION['mail_data'] ?? null;
 /* - mail_dataがセッションにない場合はmail-search.phpにリダイレクトする

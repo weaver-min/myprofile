@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 /* - ページ番号を取得して、1未満の場合は1にする
  - 1ページあたりの表示件数を15件に設定
  - SQLクエリを構築して、配信停止（stop=1）でない顧客かつメールアドレスが空でない顧客を対象とする
@@ -331,7 +330,6 @@ $count = count($customers);
           <div class="page-title">メール送信先一覧</div>
           <div class="page-subtitle">配信する顧客にチェックを入れてください（<?= $count ?>件）</div>
         </div>
-        <a href="mail-search.php" class="btn btn-ghost btn-sm">条件を変更</a>
       </div>
 
       <div class="card">

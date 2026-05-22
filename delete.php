@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 
 $id = (int)($_POST['id'] ?? 0);
 /* - IDが0の場合は不正なアクセスとみなし、顧客一覧にリダイレクトする

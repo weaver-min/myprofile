@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 /* 顧客情報登録完了画面。customer-confirm.php から遷移してくる前提で、GET パラメータに success がない場合は customer-register.php にリダイレクトする。*/
 if (!isset($_GET['success'])) {
     header("Location: customer-register.php");

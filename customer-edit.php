@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 // IDが0の場合は一覧にリダイレクトでリストページにします。

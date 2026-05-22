@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 require 'customer-validation.php';
 
 /* - POSTされたデータを正規化して配列にまとめる

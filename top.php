@@ -1,6 +1,5 @@
 <?php
-require 'auth.php';
-require 'db.php';
+require 'header.php';
 
 // fetch group counts
 /* - データベースから各グループの登録数を取得するクエリを実行する
