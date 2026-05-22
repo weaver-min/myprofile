@@ -13,11 +13,12 @@ if (!$mailData) {
  - これにより、ユーザーがページをリロードしても同じメールが再送されることを防ぐ
 */
 // clear session immediately to prevent double send
-unset($_SESSION['mail_data']);
 
 $send  = $mailData['send'];
 $title = $mailData['title'];
 $body  = $mailData['body'];
+
+unset($_SESSION['mail_data']);
 /* - 送信先が空、タイトルが空、本文が空の場合はmail-work.phpにリダイレクトする
  - 正常な場合は、送信処理を行う
 */

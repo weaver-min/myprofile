@@ -168,28 +168,23 @@ $customers = $stmt->fetchAll();
       </ol>
       <div class="topbar-right">
         <form method="post" action="mail-work.php" style="display:inline;">
-          <?php foreach ($_SESSION['mail_data']['send'] as $id): ?>
-            <input type="hidden" name="send[]" value="<?= (int) $id ?>">
-          <?php endforeach; ?>
-          <input type="hidden" name="title" value="<?php echo htmlspecialchars($_SESSION['mail_data']['title']); ?>">
-          <input type="hidden" name="body" value="<?php echo htmlspecialchars($_SESSION['mail_data']['body']); ?>">
-          <button class="btn btn-ghost btn-sm" onclick="return confirm('前の画面に戻りますか？入力内容は保存されます。')">
+          <button class="btn btn-ghost btn-sm" onclick="return confirm('前の画面に戻りますか？入力内容は削除されます。')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round">
               <polyline points="15 18 9 12 15 6" />
             </svg>
             戻る
           </button>
-          </form>
-          <a href="logout.php" class="btn btn-ghost btn-sm" onclick="return confirm('ログアウトしますか？')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-            ログアウト
-          </a>
+        </form>
+        <a href="logout.php" class="btn btn-ghost btn-sm" onclick="return confirm('ログアウトしますか？')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          ログアウト
+        </a>
       </div>
     </header>
 
